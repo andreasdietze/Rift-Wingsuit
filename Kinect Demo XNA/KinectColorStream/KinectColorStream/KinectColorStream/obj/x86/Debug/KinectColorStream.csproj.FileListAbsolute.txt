@@ -1,0 +1,20 @@
+c:\users\bami\documents\visual studio 2010\Projects\KinectColorStream\KinectColorStream\KinectColorStream\bin\x86\Debug\KinectColorStream.exe
+c:\users\bami\documents\visual studio 2010\Projects\KinectColorStream\KinectColorStream\KinectColorStream\bin\x86\Debug\KinectColorStream.pdb
+c:\users\bami\documents\visual studio 2010\Projects\KinectColorStream\KinectColorStream\KinectColorStream\obj\x86\Debug\KinectColorStream.csprojResolveAssemblyReference.cache
+c:\users\bami\documents\visual studio 2010\Projects\KinectColorStream\KinectColorStream\KinectColorStream\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
+c:\users\bami\documents\visual studio 2010\Projects\KinectColorStream\KinectColorStream\KinectColorStream\obj\x86\Debug\KinectColorStream.exe
+c:\users\bami\documents\visual studio 2010\Projects\KinectColorStream\KinectColorStream\KinectColorStream\obj\x86\Debug\KinectColorStream.pdb
+c:\users\bami\documents\visual studio 2010\Projects\KinectColorStream\KinectColorStream\KinectColorStream\bin\x86\Debug\Content\DepthShader.xnb
+c:\users\bami\documents\visual studio 2010\Projects\KinectColorStream\KinectColorStream\KinectColorStream\bin\x86\Debug\Content\redSquare.xnb
+C:\Users\Bami\documents\visual studio 2010\Projects\KinectColorStream\KinectColorStream\KinectColorStream\bin\x86\Debug\Content\circle.xnb
+C:\Users\Bami\documents\visual studio 2010\Projects\KinectColorStream\KinectColorStream\KinectColorStream\bin\x86\Debug\Content\KinectInfo.xnb
+C:\Users\Bami\Desktop\VRAR Projekt\KinectColorStream\KinectColorStream\KinectColorStream\bin\x86\Debug\Content\DepthShader.xnb
+C:\Users\Bami\Desktop\VRAR Projekt\KinectColorStream\KinectColorStream\KinectColorStream\bin\x86\Debug\Content\redSquare.xnb
+C:\Users\Bami\Desktop\VRAR Projekt\KinectColorStream\KinectColorStream\KinectColorStream\bin\x86\Debug\Content\circle.xnb
+C:\Users\Bami\Desktop\VRAR Projekt\KinectColorStream\KinectColorStream\KinectColorStream\bin\x86\Debug\Content\KinectInfo.xnb
+C:\Users\Bami\Desktop\VRAR Projekt\KinectColorStream\KinectColorStream\KinectColorStream\bin\x86\Debug\KinectColorStream.exe
+C:\Users\Bami\Desktop\VRAR Projekt\KinectColorStream\KinectColorStream\KinectColorStream\bin\x86\Debug\KinectColorStream.pdb
+C:\Users\Bami\Desktop\VRAR Projekt\KinectColorStream\KinectColorStream\KinectColorStream\obj\x86\Debug\KinectColorStream.csprojResolveAssemblyReference.cache
+C:\Users\Bami\Desktop\VRAR Projekt\KinectColorStream\KinectColorStream\KinectColorStream\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
+C:\Users\Bami\Desktop\VRAR Projekt\KinectColorStream\KinectColorStream\KinectColorStream\obj\x86\Debug\KinectColorStream.exe
+C:\Users\Bami\Desktop\VRAR Projekt\KinectColorStream\KinectColorStream\KinectColorStream\obj\x86\Debug\KinectColorStream.pdb

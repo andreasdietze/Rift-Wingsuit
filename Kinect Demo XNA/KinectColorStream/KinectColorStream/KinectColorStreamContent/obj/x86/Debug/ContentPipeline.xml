@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<XnaContent xmlns:Pipeline="Microsoft.Xna.Framework.Content.Pipeline">
+  <Asset Type="Pipeline:BuildItemCollection">
+    <Item>
+      <Source>DepthShader.fx</Source>
+      <Name>DepthShader</Name>
+      <Importer>EffectImporter</Importer>
+      <Processor>EffectProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Bami\Desktop\VRAR Projekt\KinectColorStream\KinectColorStream\KinectColorStream\bin\x86\Debug\Content\DepthShader.xnb</Output>
+      <Time>2015-05-10T11:24:14.5522242+02:00</Time>
+    </Item>
+    <Item>
+      <Source>redSquare.png</Source>
+      <Name>redSquare</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Bami\Desktop\VRAR Projekt\KinectColorStream\KinectColorStream\KinectColorStream\bin\x86\Debug\Content\redSquare.xnb</Output>
+      <Time>2015-05-10T12:00:16.5738848+02:00</Time>
+    </Item>
+    <Item>
+      <Source>circle.png</Source>
+      <Name>circle</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Bami\Desktop\VRAR Projekt\KinectColorStream\KinectColorStream\KinectColorStream\bin\x86\Debug\Content\circle.xnb</Output>
+      <Time>2015-05-10T22:29:28.6241785+02:00</Time>
+    </Item>
+    <Item>
+      <Source>KinectInfo.spritefont</Source>
+      <Name>KinectInfo</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Bami\Desktop\VRAR Projekt\KinectColorStream\KinectColorStream\KinectColorStream\bin\x86\Debug\Content\KinectInfo.xnb</Output>
+      <Time>2015-05-10T22:54:07.1597459+02:00</Time>
+    </Item>
+    <BuildSuccessful>true</BuildSuccessful>
+    <Settings>
+      <TargetPlatform>Windows</TargetPlatform>
+      <TargetProfile>HiDef</TargetProfile>
+      <BuildConfiguration>Debug</BuildConfiguration>
+      <CompressContent>false</CompressContent>
+      <RootDirectory>C:\Users\Bami\Desktop\VRAR Projekt\KinectColorStream\KinectColorStream\KinectColorStreamContent\</RootDirectory>
+      <LoggerRootDirectory>C:\Users\Bami\Desktop\VRAR Projekt\KinectColorStream\KinectColorStream\KinectColorStream\</LoggerRootDirectory>
+      <IntermediateDirectory>C:\Users\Bami\Desktop\VRAR Projekt\KinectColorStream\KinectColorStream\KinectColorStreamContent\obj\x86\Debug\</IntermediateDirectory>
+      <OutputDirectory>C:\Users\Bami\Desktop\VRAR Projekt\KinectColorStream\KinectColorStream\KinectColorStream\bin\x86\Debug\Content\</OutputDirectory>
+    </Settings>
+    <Assemblies>
+      <Assembly>
+        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.XImporter.dll</Key>
+        <Value>2010-08-23T13:41:18+02:00</Value>
+      </Assembly>
+      <Assembly>
+        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.VideoImporters.dll</Key>
+        <Value>2010-08-23T13:41:18+02:00</Value>
+      </Assembly>
+      <Assembly>
+        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.TextureImporter.dll</Key>
+        <Value>2010-08-23T13:41:18+02:00</Value>
+      </Assembly>
+      <Assembly>
+        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.FBXImporter.dll</Key>
+        <Value>2010-08-23T13:41:18+02:00</Value>
+      </Assembly>
+      <Assembly>
+        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.EffectImporter.dll</Key>
+        <Value>2010-08-23T13:41:18+02:00</Value>
+      </Assembly>
+      <Assembly>
+        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.AudioImporters.dll</Key>
+        <Value>2010-08-23T13:41:18+02:00</Value>
+      </Assembly>
+      <Assembly>
+        <Key>C:\Windows\Microsoft.Net\assembly\GAC_32\Microsoft.Xna.Framework.Content.Pipeline\v4.0_4.0.0.0__842cf8be1de50553\Microsoft.Xna.Framework.Content.Pipeline.dll</Key>
+        <Value>2011-11-02T13:12:47.5089278+01:00</Value>
+      </Assembly>
+    </Assemblies>
+  </Asset>
+</XnaContent>

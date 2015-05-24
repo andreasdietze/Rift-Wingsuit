@@ -1,0 +1,4 @@
+Content\DepthShader.xnb
+Content\redSquare.xnb
+Content\circle.xnb
+Content\KinectInfo.xnb

@@ -1,0 +1,2 @@
+c:\users\bami\documents\visual studio 2010\Projects\KinectColorStream\KinectColorStream\KinectColorStreamContent\obj\x86\Debug\KinectColorStreamContent.contentprojResolveAssemblyReference.cache
+C:\Users\Bami\Desktop\VRAR Projekt\KinectColorStream\KinectColorStream\KinectColorStreamContent\obj\x86\Debug\KinectColorStreamContent.contentprojResolveAssemblyReference.cache
