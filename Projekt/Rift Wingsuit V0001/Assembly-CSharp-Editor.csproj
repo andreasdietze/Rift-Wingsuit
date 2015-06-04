@@ -56,10 +56,10 @@
  <HintPath>F:/Unity5/Editor/Data/UnityExtensions/Unity/GUISystem/Editor/UnityEditor.UI.dll</HintPath>
  </Reference>
  <Reference Include="OpenNI.Net">
- <HintPath>C:/Users/Bami/Desktop/WingsuitKinectCombine/Rift-Wingsuit/Projekt/Rift Wingsuit V0001/Assets/ZigFu/Scripts/_Internal/OpenNI.Net.dll</HintPath>
+ <HintPath>C:/Users/Bami/Desktop/VRAR Projekt/Project/Rift-Wingsuit/Projekt/Rift Wingsuit V0001/Assets/ZigFu/Scripts/_Internal/OpenNI.Net.dll</HintPath>
  </Reference>
  <Reference Include="ZDK">
- <HintPath>C:/Users/Bami/Desktop/WingsuitKinectCombine/Rift-Wingsuit/Projekt/Rift Wingsuit V0001/Assets/ZigFu/Scripts/_Internal/ZDK.dll</HintPath>
+ <HintPath>C:/Users/Bami/Desktop/VRAR Projekt/Project/Rift-Wingsuit/Projekt/Rift Wingsuit V0001/Assets/ZigFu/Scripts/_Internal/ZDK.dll</HintPath>
  </Reference>
  <Reference Include="UnityEditor.Graphs">
  <HintPath>F:/Unity5/Editor/Data/Managed/UnityEditor.Graphs.dll</HintPath>

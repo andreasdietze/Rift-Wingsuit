@@ -19,36 +19,38 @@ public class FlyCam : MonoBehaviour {
 	private Vector3 lastDir = new Vector3();
 
 	// Kincect control
-	//float kinectY;
-	// Find Camera object
-	//GameObject fly;
-	// Access to Head/Shoulder/Delta-Script (HSDOutput)
-	//HSDOutputText kinectOutput;
-
 	public HSDOutputText kinectOutput;
-	
+	private float kinectYaw;
+	private float kinectPitch;
+
+	// Cfg
+	public bool enableYaw = true;
+	public bool enablePitch = true;
 	
 	// Use this for initialization
 	void Start () {
-		//fly = GameObject.Find("Fly Cam");
-		//kinectOutput = fly.GetComponent<HSDOutputText>(); 
-		//kinectY = kinectOutput.ReturnDetla();
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		
 		// Kinect control
-		//fly = GameObject.Find("Fly Cam");
-		//kinectOutput = fly.GetComponent<HSDOutputText>(); 
-		//kinectY = kinectOutput.ReturnDetla();
-		//print ("kinectY: " + kinectY.ToString());
+		if (enableYaw)
+			kinectYaw = kinectOutput.ReturnDeltaY ();
+		else
+			kinectYaw = 0.0f;
+
+		if (enablePitch)
+			kinectPitch = kinectOutput.ReturnDeltaZ ();
+		else
+			kinectPitch = 0.0f;
 
 		// Mouse Look
 		lastMouse = Input.mousePosition - lastMouse;
 		if ( ! inverted ) lastMouse.y = -lastMouse.y;
 		lastMouse *= sensitivity;
-		lastMouse = new Vector3( transform.eulerAngles.x + lastMouse.y, transform.eulerAngles.y + lastMouse.x + kinectOutput.ReturnDetla(), 0);
+		lastMouse = new Vector3( transform.eulerAngles.x + lastMouse.y + kinectPitch,
+		                         transform.eulerAngles.y + lastMouse.x + kinectYaw, 0);
 		transform.eulerAngles = lastMouse;
 		lastMouse = Input.mousePosition;
 		
