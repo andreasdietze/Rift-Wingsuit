@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 
 Project("{AAE7287C-0DC2-A922-CE8E-4043D40C5C6B}") = "Rift Wingsuit V0001", "Assembly-CSharp-vs.csproj", "{A2C3C0BF-4B3B-C6F1-3D17-262B30CE96C4}"
 EndProject
+Project("{AAE7287C-0DC2-A922-CE8E-4043D40C5C6B}") = "Rift Wingsuit V0001", "Assembly-CSharp-Editor-vs.csproj", "{742EF05B-5F46-9895-35A1-0AB87281A547}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,11 +15,15 @@ Global
 		{A2C3C0BF-4B3B-C6F1-3D17-262B30CE96C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A2C3C0BF-4B3B-C6F1-3D17-262B30CE96C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A2C3C0BF-4B3B-C6F1-3D17-262B30CE96C4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{742EF05B-5F46-9895-35A1-0AB87281A547}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{742EF05B-5F46-9895-35A1-0AB87281A547}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{742EF05B-5F46-9895-35A1-0AB87281A547}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{742EF05B-5F46-9895-35A1-0AB87281A547}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
-											GlobalSection(MonoDevelopProperties) = preSolution
+																	GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = Assembly-CSharp.csproj
 		Policies = $0
 		$0.TextStylePolicy = $1
