@@ -46,8 +46,45 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Controller.cs" />
      <Compile Include="Assets\FlyCam.cs" />
+     <Compile Include="Assets\KeyboardAndMouseController.cs" />
+     <Compile Include="Assets\KinectController.cs" />
+     <Compile Include="Assets\OVR\Moonlight\Scripts\OVROverlay.cs" />
+     <Compile Include="Assets\OVR\Moonlight\Scripts\OVRPlatformMenu.cs" />
+     <Compile Include="Assets\OVR\Moonlight\Scripts\OVRPostRender.cs" />
+     <Compile Include="Assets\OVR\Moonlight\Scripts\OVRTouchpad.cs" />
+     <Compile Include="Assets\OVR\Moonlight\Scripts\OVRVolumeControl.cs" />
+     <Compile Include="Assets\OVR\Moonlight\Scripts\Utils\OVRChromaticAberration.cs" />
+     <Compile Include="Assets\OVR\Moonlight\Scripts\Utils\OVRDebugGraph.cs" />
+     <Compile Include="Assets\OVR\Moonlight\Scripts\Utils\OVRDebugUtils.cs" />
+     <Compile Include="Assets\OVR\Moonlight\Scripts\Utils\OVRGameUtils.cs" />
+     <Compile Include="Assets\OVR\Moonlight\Scripts\Utils\OVRInputControl.cs" />
+     <Compile Include="Assets\OVR\Moonlight\Scripts\Utils\OVRMathUtils.cs" />
+     <Compile Include="Assets\OVR\Moonlight\Scripts\Utils\OVRModeParms.cs" />
+     <Compile Include="Assets\OVR\Moonlight\Scripts\Utils\OVRMonoscopic.cs" />
+     <Compile Include="Assets\OVR\Moonlight\Scripts\Utils\OVRResetOrientation.cs" />
+     <Compile Include="Assets\OVR\Moonlight\Scripts\Utils\OVRTimeWarpUtils.cs" />
+     <Compile Include="Assets\OVR\Moonlight\Scripts\Utils\OVRWaitCursor.cs" />
+     <Compile Include="Assets\OVR\Scripts\OVRCameraRig.cs" />
+     <Compile Include="Assets\OVR\Scripts\OVRCommon.cs" />
+     <Compile Include="Assets\OVR\Scripts\OVRDisplay.cs" />
+     <Compile Include="Assets\OVR\Scripts\OVRManager.cs" />
+     <Compile Include="Assets\OVR\Scripts\OVRPluginEvent.cs" />
+     <Compile Include="Assets\OVR\Scripts\OVRTracker.cs" />
+     <Compile Include="Assets\OVR\Scripts\OVRUnityVersionChecker.cs" />
+     <Compile Include="Assets\OVR\Scripts\OvrCapi.cs" />
+     <Compile Include="Assets\OVR\Scripts\Util\OVRCrosshair.cs" />
+     <Compile Include="Assets\OVR\Scripts\Util\OVRDebugInfo.cs" />
+     <Compile Include="Assets\OVR\Scripts\Util\OVRGUI.cs" />
+     <Compile Include="Assets\OVR\Scripts\Util\OVRGamepadController.cs" />
+     <Compile Include="Assets\OVR\Scripts\Util\OVRGridCube.cs" />
+     <Compile Include="Assets\OVR\Scripts\Util\OVRPlayerController.cs" />
+     <Compile Include="Assets\OVR\Scripts\Util\OVRSceneSampleController.cs" />
+     <Compile Include="Assets\OVR\Scripts\Util\OVRScreenFade.cs" />
+     <Compile Include="Assets\OVR\Scripts\Util\OVRTrackerBounds.cs" />
      <Compile Include="Assets\TestSceen\HSDOutputText.cs" />
+     <Compile Include="Assets\XBoxController.cs" />
      <Compile Include="Assets\ZigFu\Scripts\UISessionControls\ZigFader.cs" />
      <Compile Include="Assets\ZigFu\Scripts\UISessionControls\ZigFollowHandPoint.cs" />
      <Compile Include="Assets\ZigFu\Scripts\UISessionControls\ZigPushDetector.cs" />
@@ -71,10 +108,23 @@
      <Compile Include="Assets\ZigFu\Scripts\_Internal\Matrix3.cs" />
      <Compile Include="Assets\ZigFu\Scripts\_Internal\TimedBuffer.cs" />
      <Compile Include="Assets\ZigFu\Scripts\_Internal\kinectSpecific.cs" />
+     <None Include="Assets\Plugins\donotdelete.txt" />
+     <None Include="Assets\Plugins\Android\assets\donotdelete.txt" />
+     <None Include="Assets\Plugins\x86_64\donotdelete.txt" />
+     <None Include="Assets\Plugins\Android\AndroidManifest.xml" />
+     <None Include="Assets\OVR\Shaders\TextShader3D.shader" />
      <None Include="Assets\Shaders\TerrBumpAddPass.shader" />
+     <None Include="Assets\OVR\Moonlight\Shaders\Unlit Crosshair.shader" />
+     <None Include="Assets\OVR\Shaders\Unlit Transparent HUD.shader" />
      <None Include="Assets\Shaders\TerrBumpFirstPass.shader" />
+     <None Include="Assets\OVR\Moonlight\Materials\GlobalMenu\OVRCutoutRamp.shader" />
+     <None Include="Assets\OVR\Shaders\OVRGUIShader.shader" />
+     <None Include="Assets\Plugins\x86\donotdelete.txt" />
  <Reference Include="UnityEngine.UI">
  <HintPath>F:/Unity5/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
+ </Reference>
+ <Reference Include="XInputDotNetPure">
+ <HintPath>C:/Users/Bami/Desktop/VRAR Projekt/Project/Rift-Wingsuit/Projekt/Rift Wingsuit V0001/Assets/Plugins/x86_64/XInputDotNetPure.dll</HintPath>
  </Reference>
  <Reference Include="OpenNI.Net">
  <HintPath>C:/Users/Bami/Desktop/VRAR Projekt/Project/Rift-Wingsuit/Projekt/Rift Wingsuit V0001/Assets/ZigFu/Scripts/_Internal/OpenNI.Net.dll</HintPath>

@@ -13,16 +13,65 @@ public class FlyCam : MonoBehaviour
 
     protected Vector3 lastDir = new Vector3();
     protected Vector3 lastViewport = new Vector3();
+
+	public bool useKinect = false;
+	private Vector3 lastMouse = new Vector3(255, 255, 255);
+	public float sensitivity = 0.25f; 		// keep it from 0..1
+	// Kincect control
+	public HSDOutputText kinectOutput;
+	private float kinectYaw;
+	private float kinectPitch;
+	
+	// Cfg
+	public bool enableYaw = true;
+	public bool enablePitch = true;
     void Start()
     {
-        controller = gameObject.AddComponent<KeyboardAndMouseController>();
+		if(!useKinect)
+        	controller = gameObject.AddComponent<KinectController>();
     }
 
     void Update()
     {
-        //Things to do here...
-        lastViewport = controller.CalculateViewport(inverted);
-        Vector3 dir = controller.GetDir();
+		Vector3 dir = new Vector3();// create (0,0,0)
+		if (useKinect) {
+			// Kinect control
+			if (enableYaw)
+				kinectYaw = kinectOutput.ReturnDeltaY ();
+			else
+				kinectYaw = 0.0f;
+			
+			if (enablePitch)
+				kinectPitch = kinectOutput.ReturnDeltaZ ();
+			else
+				kinectPitch = 0.0f;
+			
+			// Mouse Look
+			lastMouse = Input.mousePosition - lastMouse;
+			if ( ! inverted ) lastMouse.y = -lastMouse.y;
+			lastMouse *= sensitivity;
+			lastMouse = new Vector3( transform.eulerAngles.x + lastMouse.y + kinectPitch,
+			                        transform.eulerAngles.y + lastMouse.x + kinectYaw, 0);
+			transform.eulerAngles = lastMouse;
+			lastMouse = Input.mousePosition;
+			
+			
+			// Movement of the camera
+			if (Input.GetKey(KeyCode.W)) dir.z += 1.0f;
+			if (Input.GetKey(KeyCode.S)) dir.z -= 1.0f;
+			if (Input.GetKey(KeyCode.A)) dir.x -= 1.0f;
+			if (Input.GetKey(KeyCode.D)) dir.x += 1.0f;
+			if (Input.GetKey(KeyCode.Q)) dir.y -= 1.0f;
+			if (Input.GetKey(KeyCode.E)) dir.y += 1.0f;
+			
+			dir.z += 1.0f;
+			
+			dir.Normalize();
+		} else {
+			//Things to do here...
+			lastViewport = controller.CalculateViewport (inverted);
+			dir = controller.GetDir ();
+		}
 
         // Movement of the camera
 

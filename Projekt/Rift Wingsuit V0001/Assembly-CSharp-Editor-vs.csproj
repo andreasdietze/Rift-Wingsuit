@@ -47,13 +47,31 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Editor\BuildScenes.cs" />
+     <Compile Include="Assets\OVR\Editor\OVRBuild.cs" />
+     <Compile Include="Assets\OVR\Editor\OVRGameView.cs" />
+     <Compile Include="Assets\OVR\Editor\OVRPrefabs.cs" />
+     <Compile Include="Assets\OVR\Editor\OVRShimLoader.cs" />
+     <Compile Include="Assets\OVR\Moonlight\Editor\OVRMoonlightLoader.cs" />
+     <None Include="Assets\Plugins\donotdelete.txt" />
+     <None Include="Assets\Plugins\Android\assets\donotdelete.txt" />
+     <None Include="Assets\Plugins\x86_64\donotdelete.txt" />
+     <None Include="Assets\Plugins\Android\AndroidManifest.xml" />
+     <None Include="Assets\OVR\Shaders\TextShader3D.shader" />
      <None Include="Assets\Shaders\TerrBumpAddPass.shader" />
+     <None Include="Assets\OVR\Moonlight\Shaders\Unlit Crosshair.shader" />
+     <None Include="Assets\OVR\Shaders\Unlit Transparent HUD.shader" />
      <None Include="Assets\Shaders\TerrBumpFirstPass.shader" />
+     <None Include="Assets\OVR\Moonlight\Materials\GlobalMenu\OVRCutoutRamp.shader" />
+     <None Include="Assets\OVR\Shaders\OVRGUIShader.shader" />
+     <None Include="Assets\Plugins\x86\donotdelete.txt" />
  <Reference Include="UnityEngine.UI">
  <HintPath>F:/Unity5/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
  <Reference Include="UnityEditor.UI">
  <HintPath>F:/Unity5/Editor/Data/UnityExtensions/Unity/GUISystem/Editor/UnityEditor.UI.dll</HintPath>
+ </Reference>
+ <Reference Include="XInputDotNetPure">
+ <HintPath>C:/Users/Bami/Desktop/VRAR Projekt/Project/Rift-Wingsuit/Projekt/Rift Wingsuit V0001/Assets/Plugins/x86_64/XInputDotNetPure.dll</HintPath>
  </Reference>
  <Reference Include="OpenNI.Net">
  <HintPath>C:/Users/Bami/Desktop/VRAR Projekt/Project/Rift-Wingsuit/Projekt/Rift Wingsuit V0001/Assets/ZigFu/Scripts/_Internal/OpenNI.Net.dll</HintPath>

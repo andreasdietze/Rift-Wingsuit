@@ -7,6 +7,7 @@ public class KinectController : Controller
     public HSDOutputText kinectOutput;
     private float kinectYaw;
     private float kinectPitch;
+	public bool inverted = false;
 
     public bool enableYaw = true;
     public bool enablePitch = true;
@@ -33,17 +34,18 @@ public class KinectController : Controller
         return dir;
     }
 
-    public override Vector3 CalculateViewport()
+	public override Vector3 CalculateViewport(bool inverted)
     {
         // Kinect control
-        if (enableYaw)
-            kinectYaw = kinectOutput.ReturnDeltaY();
+       /* if (enableYaw)
+			kinectYaw = kinectOutput.ReturnDeltaY ();
         else
             kinectYaw = 0.0f;
         if (enablePitch)
             kinectPitch = kinectOutput.ReturnDeltaZ();
         else
-            kinectPitch = 0.0f;
+            kinectPitch = 0.0f;*/
+		print ("KinectOutput: " + kinectOutput.ToString ());
         // Mouse Look
         lastViewport = Input.mousePosition - lastViewport;
         if (!inverted) lastViewport.y = -lastViewport.y;
@@ -53,7 +55,7 @@ public class KinectController : Controller
         transform.eulerAngles = lastViewport;
         lastViewport = Input.mousePosition;
 
-        return lastViewport;
+		return transform.eulerAngles; //lastViewport;
     }
 	
 	// Update is called once per frame
