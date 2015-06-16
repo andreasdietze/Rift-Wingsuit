@@ -169,8 +169,8 @@ namespace OceanSurfaceEffects
             m_oceanMat.SetTexture("_Map0", m_waves.map0);
             m_oceanMat.SetTexture("_Map1", m_waves.map1);
             m_oceanMat.SetTexture("_Map2", m_waves.map2);
-            m_oceanMat.SetVector("_SunDir", new Vector(-0.7, -0.7, 0).forward * -1.0f);
-            m_oceanMat.SetVector("_SunColor", new Color32(1.0, 1.0, 1.0, 1.0));
+            m_oceanMat.SetVector("_SunDir", new Vector3(-0.7f, -0.7f, 0.0f)* -1.0f);
+            m_oceanMat.SetVector("_SunColor", new Vector4(1.0f, 1.0f, 1.0f, 1.0f));
             m_oceanMat.SetFloat("_LodFadeDist", m_lodFadeDist);
 
             //This makes sure the grid is always centered were the player is
