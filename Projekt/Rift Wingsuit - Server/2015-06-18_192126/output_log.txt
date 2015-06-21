@@ -1,0 +1,152 @@
+Initialize engine version: 5.0.2f1 (0b02744d4013)
+GfxDevice: creating device client; threaded=1
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.0]
+    Renderer: NVIDIA GeForce GTX 780 (ID=0x1004)
+    Vendor:   NVIDIA
+    VRAM:     3014 MB
+Begin MonoManager ReloadAssembly
+Platform assembly: C:\Users\Bami\Desktop\VRAR Projekt\Project\Rift-Wingsuit\Projekt\Rift Wingsuit V0001\RiftWingsuit_Data\Managed\UnityEngine.dll (this message is harmless)
+Loading C:\Users\Bami\Desktop\VRAR Projekt\Project\Rift-Wingsuit\Projekt\Rift Wingsuit V0001\RiftWingsuit_Data\Managed\UnityEngine.dll into Unity Child Domain
+Platform assembly: C:\Users\Bami\Desktop\VRAR Projekt\Project\Rift-Wingsuit\Projekt\Rift Wingsuit V0001\RiftWingsuit_Data\Managed\Assembly-CSharp.dll (this message is harmless)
+Loading C:\Users\Bami\Desktop\VRAR Projekt\Project\Rift-Wingsuit\Projekt\Rift Wingsuit V0001\RiftWingsuit_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
+Platform assembly: C:\Users\Bami\Desktop\VRAR Projekt\Project\Rift-Wingsuit\Projekt\Rift Wingsuit V0001\RiftWingsuit_Data\Managed\UnityEngine.UI.dll (this message is harmless)
+Loading C:\Users\Bami\Desktop\VRAR Projekt\Project\Rift-Wingsuit\Projekt\Rift Wingsuit V0001\RiftWingsuit_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
+Platform assembly: C:\Users\Bami\Desktop\VRAR Projekt\Project\Rift-Wingsuit\Projekt\Rift Wingsuit V0001\RiftWingsuit_Data\Managed\XInputDotNetPure.dll (this message is harmless)
+Loading C:\Users\Bami\Desktop\VRAR Projekt\Project\Rift-Wingsuit\Projekt\Rift Wingsuit V0001\RiftWingsuit_Data\Managed\XInputDotNetPure.dll into Unity Child Domain
+Platform assembly: C:\Users\Bami\Desktop\VRAR Projekt\Project\Rift-Wingsuit\Projekt\Rift Wingsuit V0001\RiftWingsuit_Data\Managed\XInputDotNetPure.dll (this message is harmless)
+Loading C:\Users\Bami\Desktop\VRAR Projekt\Project\Rift-Wingsuit\Projekt\Rift Wingsuit V0001\RiftWingsuit_Data\Managed\XInputDotNetPure.dll into Unity Child Domain
+Platform assembly: C:\Users\Bami\Desktop\VRAR Projekt\Project\Rift-Wingsuit\Projekt\Rift Wingsuit V0001\RiftWingsuit_Data\Managed\OpenNI.Net.dll (this message is harmless)
+Loading C:\Users\Bami\Desktop\VRAR Projekt\Project\Rift-Wingsuit\Projekt\Rift Wingsuit V0001\RiftWingsuit_Data\Managed\OpenNI.Net.dll into Unity Child Domain
+Platform assembly: C:\Users\Bami\Desktop\VRAR Projekt\Project\Rift-Wingsuit\Projekt\Rift Wingsuit V0001\RiftWingsuit_Data\Managed\ZDK.dll (this message is harmless)
+Loading C:\Users\Bami\Desktop\VRAR Projekt\Project\Rift-Wingsuit\Projekt\Rift Wingsuit V0001\RiftWingsuit_Data\Managed\ZDK.dll into Unity Child Domain
+- Completed reload, in  0.049 seconds
+desktop: 1920x1080 60Hz; virtual: 3840x1080 at -1920,0
+<RI> Initializing input.
+<RI> Input initialized.
+<RI> Initialized touch support.
+Platform assembly: C:\Users\Bami\Desktop\VRAR Projekt\Project\Rift-Wingsuit\Projekt\Rift Wingsuit V0001\RiftWingsuit_Data\Managed\System.Core.dll (this message is harmless)
+The referenced script on this Behaviour is missing!
+ 
+(Filename:  Line: 1713)
+
+Crash!!!
+SymInit: Symbol-SearchPath: '.;C:\Users\Bami\Desktop\VRAR Projekt\Project\Rift-Wingsuit\Projekt\Rift Wingsuit V0001;C:\Users\Bami\Desktop\VRAR Projekt\Project\Rift-Wingsuit\Projekt\Rift Wingsuit V0001;C:\Windows;C:\Windows\system32;SRV*C:\websymbols*http://msdl.microsoft.com/download/symbols;', symOptions: 530, UserName: 'Bami'
+OS-Version: 6.1.7601 (Service Pack 1) 0x100-0x1
+C:\Users\Bami\Desktop\VRAR Projekt\Project\Rift-Wingsuit\Projekt\Rift Wingsuit V0001\RiftWingsuit.exe:RiftWingsuit.exe (01190000), size: 16576512 (result: 0), SymType: '-exported-', PDB: 'C:\Users\Bami\Desktop\VRAR Projekt\Project\Rift-Wingsuit\Projekt\Rift Wingsuit V0001\RiftWingsuit.exe', fileVersion: 5.0.2.628
+C:\Windows\SysWOW64\ntdll.dll:ntdll.dll (77920000), size: 1572864 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\SysWOW64\ntdll.dll', fileVersion: 6.1.7601.18247
+C:\Windows\syswow64\kernel32.dll:kernel32.dll (76C70000), size: 1114112 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\syswow64\kernel32.dll', fileVersion: 6.1.7601.18409
+C:\Windows\syswow64\KERNELBASE.dll:KERNELBASE.dll (76AD0000), size: 290816 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\syswow64\KERNELBASE.dll', fileVersion: 6.1.7601.18409
+C:\Windows\system32\HID.DLL:HID.DLL (74030000), size: 36864 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\system32\HID.DLL', fileVersion: 6.1.7600.16385
+C:\Windows\syswow64\msvcrt.dll:msvcrt.dll (765A0000), size: 704512 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\syswow64\msvcrt.dll', fileVersion: 7.0.7601.17744
+C:\Windows\syswow64\WS2_32.dll:WS2_32.dll (757C0000), size: 217088 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\syswow64\WS2_32.dll', fileVersion: 6.1.7601.17514
+C:\Windows\syswow64\RPCRT4.dll:RPCRT4.dll (75450000), size: 983040 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\syswow64\RPCRT4.dll', fileVersion: 6.1.7601.18532
+C:\Windows\syswow64\SspiCli.dll:SspiCli.dll (75340000), size: 393216 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\syswow64\SspiCli.dll', fileVersion: 6.1.7601.18526
+C:\Windows\syswow64\CRYPTBASE.dll:CRYPTBASE.dll (75330000), size: 49152 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\syswow64\CRYPTBASE.dll', fileVersion: 6.1.7600.16385
+C:\Windows\SysWOW64\sechost.dll:sechost.dll (75430000), size: 102400 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\SysWOW64\sechost.dll', fileVersion: 6.1.7600.16385
+C:\Windows\syswow64\NSI.dll:NSI.dll (76E10000), size: 24576 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\syswow64\NSI.dll', fileVersion: 6.1.7600.16385
+C:\Windows\syswow64\USER32.dll:USER32.dll (764A0000), size: 1048576 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\syswow64\USER32.dll', fileVersion: 6.1.7601.17514
+C:\Windows\syswow64\GDI32.dll:GDI32.dll (76A40000), size: 589824 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\syswow64\GDI32.dll', fileVersion: 6.1.7601.18577
+C:\Windows\syswow64\LPK.dll:LPK.dll (75540000), size: 40960 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\syswow64\LPK.dll', fileVersion: 6.1.7601.18177
+C:\Windows\syswow64\USP10.dll:USP10.dll (76660000), size: 643072 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\syswow64\USP10.dll', fileVersion: 1.626.7601.18454
+C:\Windows\syswow64\ADVAPI32.dll:ADVAPI32.dll (75550000), size: 655360 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\syswow64\ADVAPI32.dll', fileVersion: 6.1.7601.18247
+C:\Windows\system32\VERSION.dll:VERSION.dll (75260000), size: 36864 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\system32\VERSION.dll', fileVersion: 6.1.7600.16385
+C:\Windows\syswow64\ole32.dll:ole32.dll (75660000), size: 1425408 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\syswow64\ole32.dll', fileVersion: 6.1.7601.17514
+C:\Windows\syswow64\SHLWAPI.dll:SHLWAPI.dll (769B0000), size: 356352 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\syswow64\SHLWAPI.dll', fileVersion: 6.1.7601.17514
+C:\Windows\syswow64\SHELL32.dll:SHELL32.dll (75800000), size: 12886016 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\syswow64\SHELL32.dll', fileVersion: 6.1.7601.18517
+C:\Windows\system32\OPENGL32.dll:OPENGL32.dll (74080000), size: 819200 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\system32\OPENGL32.dll', fileVersion: 6.1.7600.16385
+C:\Windows\system32\GLU32.dll:GLU32.dll (74050000), size: 139264 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\system32\GLU32.dll', fileVersion: 6.1.7600.16385
+C:\Windows\system32\DDRAW.dll:DDRAW.dll (66F40000), size: 946176 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\system32\DDRAW.dll', fileVersion: 6.1.7600.16385
+C:\Windows\system32\DCIMAN32.dll:DCIMAN32.dll (74040000), size: 24576 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\system32\DCIMAN32.dll', fileVersion: 6.1.7601.18177
+C:\Windows\syswow64\SETUPAPI.dll:SETUPAPI.dll (77060000), size: 1691648 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\syswow64\SETUPAPI.dll', fileVersion: 6.1.7601.17514
+C:\Windows\syswow64\CFGMGR32.dll:CFGMGR32.dll (76B20000), size: 159744 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\syswow64\CFGMGR32.dll', fileVersion: 6.1.7601.17621
+C:\Windows\syswow64\OLEAUT32.dll:OLEAUT32.dll (77200000), size: 585728 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\syswow64\OLEAUT32.dll', fileVersion: 6.1.7601.17676
+C:\Windows\syswow64\DEVOBJ.dll:DEVOBJ.dll (77030000), size: 73728 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\syswow64\DEVOBJ.dll', fileVersion: 6.1.7601.17621
+C:\Windows\system32\dwmapi.dll:dwmapi.dll (70A10000), size: 77824 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\system32\dwmapi.dll', fileVersion: 6.1.7600.16385
+C:\Windows\system32\WINMM.dll:WINMM.dll (72650000), size: 204800 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\system32\WINMM.dll', fileVersion: 6.1.7601.17514
+C:\Windows\system32\MSACM32.dll:MSACM32.dll (70A50000), size: 81920 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\system32\MSACM32.dll', fileVersion: 6.1.7600.16385
+C:\Windows\syswow64\IMM32.dll:IMM32.dll (75600000), size: 393216 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\syswow64\IMM32.dll', fileVersion: 6.1.7601.17514
+C:\Windows\syswow64\MSCTF.dll:MSCTF.dll (768C0000), size: 835584 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\syswow64\MSCTF.dll', fileVersion: 6.1.7600.16385
+C:\Windows\system32\DNSAPI.dll:DNSAPI.dll (71F00000), size: 278528 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\system32\DNSAPI.dll', fileVersion: 6.1.7601.17570
+C:\Windows\system32\IPHLPAPI.DLL:IPHLPAPI.DLL (72760000), size: 114688 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\system32\IPHLPAPI.DLL', fileVersion: 6.1.7601.17514
+C:\Windows\system32\WINNSI.DLL:WINNSI.DLL (72750000), size: 28672 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\system32\WINNSI.DLL', fileVersion: 6.1.7600.16385
+C:\Windows\system32\WINHTTP.dll:WINHTTP.dll (71FA0000), size: 360448 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\system32\WINHTTP.dll', fileVersion: 6.1.7601.17514
+C:\Windows\system32\webio.dll:webio.dll (71F50000), size: 323584 (result: 0), SymType: '-nosymbols-', PDB: 'C:\Windows\system32\webio.dll', fileVersion: 6.1.7601.17725
+C:\Users\Bami\Desktop\VRAR Projekt\Project\Rift-Wingsuit\Projekt\Rift Wingsuit V0001\RiftWingsuit_Data\Mono\mono.dll:mono.dll (10000000), size: 2293760 (result: 0), SymType: '-exported-', PDB: 'C:\Users\Bami\Desktop\VRAR Projekt\Project\Rift-Wingsuit\Projekt\Rift Wingsuit V0001\RiftWingsuit_Data\Mono\mono.dll'
+C:\Windows\syswow64\PSAPI.DLL:PSAPI.DLL (772F0000), size: 20480 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\syswow64\PSAPI.DLL', fileVersion: 6.1.7600.16385
+C:\Windows\system32\MSWSOCK.dll:MSWSOCK.dll (724F0000), size: 245760 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\system32\MSWSOCK.dll', fileVersion: 6.1.7601.18254
+C:\Windows\system32\uxtheme.dll:uxtheme.dll (70A70000), size: 524288 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\system32\uxtheme.dll', fileVersion: 6.1.7600.16385
+F:\Program Files (x86)\Xfire\xfire_toucan_46139.dll:xfire_toucan_46139.dll (05340000), size: 2609152 (result: 0), SymType: '-exported-', PDB: 'F:\Program Files (x86)\Xfire\xfire_toucan_46139.dll', fileVersion: 1.0.0.46139
+C:\Windows\system32\WSOCK32.dll:WSOCK32.dll (72780000), size: 28672 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\system32\WSOCK32.dll', fileVersion: 6.1.7600.16385
+C:\Windows\system32\MSIMG32.dll:MSIMG32.dll (73FF0000), size: 20480 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\system32\MSIMG32.dll', fileVersion: 6.1.7600.16385
+C:\Windows\system32\MSVCR71.DLL:MSVCR71.DLL (7C340000), size: 352256 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\system32\MSVCR71.DLL', fileVersion: 7.10.3052.4
+C:\Users\Bami\Desktop\VRAR Projekt\Project\Rift-Wingsuit\Projekt\Rift Wingsuit V0001\RiftWingsuit_Data\Plugins\OculusInitPlugin.dll:OculusInitPlugin.dll (6AB50000), size: 151552 (result: 0), SymType: '-exported-', PDB: 'C:\Users\Bami\Desktop\VRAR Projekt\Project\Rift-Wingsuit\Projekt\Rift Wingsuit V0001\RiftWingsuit_Data\Plugins\OculusInitPlugin.dll'
+C:\Windows\system32\LibOVRRT32_0_5.dll:LibOVRRT32_0_5.dll (519C0000), size: 1011712 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\system32\LibOVRRT32_0_5.dll', fileVersion: 5.0.10.57493
+C:\Windows\system32\dxgi.dll:dxgi.dll (74150000), size: 311296 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\system32\dxgi.dll', fileVersion: 6.2.9200.16492
+C:\Windows\system32\DXGIDebug.dll:DXGIDebug.dll (5E230000), size: 102400 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\system32\DXGIDebug.dll', fileVersion: 9.30.960.9200
+C:\Windows\syswow64\WINTRUST.dll:WINTRUST.dll (77440000), size: 188416 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\syswow64\WINTRUST.dll', fileVersion: 6.1.7601.18205
+C:\Windows\syswow64\CRYPT32.dll:CRYPT32.dll (76B50000), size: 1179648 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\syswow64\CRYPT32.dll', fileVersion: 6.1.7601.18277
+C:\Windows\syswow64\MSASN1.dll:MSASN1.dll (76650000), size: 49152 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\syswow64\MSASN1.dll', fileVersion: 6.1.7601.17514
+C:\Windows\system32\d3d11.dll:d3d11.dll (66DC0000), size: 1527808 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\system32\d3d11.dll', fileVersion: 6.2.9200.16570
+C:\Windows\system32\nvwgf2um.dll:nvwgf2um.dll (579B0000), size: 15015936 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\system32\nvwgf2um.dll', fileVersion: 9.18.13.5286
+C:\Windows\system32\bcrypt.dll:bcrypt.dll (72C20000), size: 94208 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\system32\bcrypt.dll', fileVersion: 6.1.7600.16385
+C:\Windows\system32\nvspcap.dll:nvspcap.dll (06C90000), size: 1323008 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\system32\nvspcap.dll', fileVersion: 2.4.3.31
+C:\Windows\SysWOW64\bcryptprimitives.dll:bcryptprimitives.dll (72BE0000), size: 249856 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\SysWOW64\bcryptprimitives.dll', fileVersion: 6.1.7600.16385
+C:\Windows\system32\MMDevAPI.DLL:MMDevAPI.DLL (6C3F0000), size: 233472 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\system32\MMDevAPI.DLL', fileVersion: 6.1.7601.17514
+C:\Windows\system32\PROPSYS.dll:PROPSYS.dll (6B790000), size: 1003520 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\system32\PROPSYS.dll', fileVersion: 7.0.7601.17514
+C:\Windows\system32\wdmaud.drv:wdmaud.drv (730D0000), size: 196608 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\system32\wdmaud.drv', fileVersion: 6.1.7601.17514
+C:\Windows\system32\ksuser.dll:ksuser.dll (741B0000), size: 16384 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\system32\ksuser.dll', fileVersion: 6.1.7600.16385
+C:\Windows\system32\AVRT.dll:AVRT.dll (55F40000), size: 28672 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\system32\AVRT.dll', fileVersion: 6.1.7600.16385
+C:\Windows\system32\AUDIOSES.DLL:AUDIOSES.DLL (66C50000), size: 221184 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\system32\AUDIOSES.DLL', fileVersion: 6.1.7601.17514
+C:\Windows\system32\msacm32.drv:msacm32.drv (741A0000), size: 32768 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\system32\msacm32.drv', fileVersion: 6.1.7600.16385
+C:\Windows\system32\midimap.dll:midimap.dll (730C0000), size: 28672 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\system32\midimap.dll', fileVersion: 6.1.7600.16385
+C:\Windows\system32\dsound.dll:dsound.dll (614C0000), size: 466944 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\system32\dsound.dll', fileVersion: 6.1.7600.16385
+C:\Windows\system32\POWRPROF.dll:POWRPROF.dll (712A0000), size: 151552 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\system32\POWRPROF.dll', fileVersion: 6.1.7600.16385
+C:\Windows\syswow64\CLBCatQ.DLL:CLBCatQ.DLL (76D80000), size: 536576 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\syswow64\CLBCatQ.DLL', fileVersion: 2001.12.8530.16385
+C:\Windows\WinSxS\x86_microsoft.windows.common-controls_6595b64144ccf1df_6.0.7601.17514_none_41e6975e2bd6f2b2\comctl32.dll:comctl32.dll (71460000), size: 1695744 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\WinSxS\x86_microsoft.windows.common-controls_6595b64144ccf1df_6.0.7601.17514_none_41e6975e2bd6f2b2\comctl32.dll', fileVersion: 6.10.7601.17514
+C:\Windows\system32\xinput1_3.dll:xinput1_3.dll (05760000), size: 90112 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\system32\xinput1_3.dll', fileVersion: 9.18.944.0
+C:\Users\Bami\Desktop\VRAR Projekt\Project\Rift-Wingsuit\Projekt\Rift Wingsuit V0001\RiftWingsuit_Data\Plugins\OculusPlugin.dll:OculusPlugin.dll (6AB00000), size: 274432 (result: 0), SymType: '-exported-', PDB: 'C:\Users\Bami\Desktop\VRAR Projekt\Project\Rift-Wingsuit\Projekt\Rift Wingsuit V0001\RiftWingsuit_Data\Plugins\OculusPlugin.dll'
+C:\Windows\system32\dbghelp.dll:dbghelp.dll (73E00000), size: 962560 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\system32\dbghelp.dll', fileVersion: 6.1.7601.17514
+
+========== OUTPUTING STACK TRACE ==================
+
+6AB031A6 (OculusPlugin) ovrHmd_SetString
+6AB042A7 (OculusPlugin) OVR_SetViewport
+6AB043A2 (OculusPlugin) UnitySetGraphicsDevice
+013587C6 (RiftWingsuit) UserList::AddUser
+01358808 (RiftWingsuit) UserList::AddUser
+01358C96 (RiftWingsuit) UserList::AddUser
+10039A42 (mono) mono_lookup_pinvoke_call
+10048500 (mono) mono_marshal_string_to_utf16
+100CFA16 (mono) mono_inst_name
+100EF065 (mono) mono_set_defaults
+100EFEB2 (mono) mono_set_defaults
+100F040D (mono) mono_set_defaults
+100F05D6 (mono) mono_set_defaults
+1005D894 (mono) mono_runtime_invoke
+012E4B2E (RiftWingsuit) scripting_gchandle_get_target
+01390289 (RiftWingsuit) ScriptingArguments::AddString
+013902FE (RiftWingsuit) ScriptingArguments::AddString
+0139035C (RiftWingsuit) ScriptingArguments::AddString
+012D3F92 (RiftWingsuit) ReportScriptingObjectsTransfer::ReportScriptingObject
+012D4189 (RiftWingsuit) ReportScriptingObjectsTransfer::ReportScriptingObject
+012D64B8 (RiftWingsuit) GetMonoBehaviourInConstructor
+012D469C (RiftWingsuit) ReportScriptingObjectsTransfer::ReportScriptingObject
+013A6A9B (RiftWingsuit) RegisterAllowNameConversionInDerivedTypes
+013A6C6D (RiftWingsuit) RegisterAllowNameConversionInDerivedTypes
+01368ED8 (RiftWingsuit) CallbackArray3<std::basic_string<char,std::char_traits<char>,stl_allocator<char,58,16> > const &,AwakeFromLoadQueue &,enum LoadLevelOperation::LoadingMode>::Invoke
+0136910F (RiftWingsuit) CallbackArray3<std::basic_string<char,std::char_traits<char>,stl_allocator<char,58,16> > const &,AwakeFromLoadQueue &,enum LoadLevelOperation::LoadingMode>::Invoke
+01359B8E (RiftWingsuit) UserList::AddUser
+01359495 (RiftWingsuit) UserList::AddUser
+01356B53 (RiftWingsuit) UserList::AddUser
+013EDBE9 (RiftWingsuit) PlayerMainWndProc
+013EF830 (RiftWingsuit) PlayerWinMain
+01726ED8 (RiftWingsuit) RemapPPtrTransfer::TransferTypelessData
+0175DF0F (RiftWingsuit) RemapPPtrTransfer::TransferTypelessData
+76C8338A (kernel32) BaseThreadInitThunk
+77959F72 (ntdll) RtlInitializeExceptionChain
+77959F45 (ntdll) RtlInitializeExceptionChain
+
+========== END OF STACKTRACE ===========
+
+**** Crash! ****
