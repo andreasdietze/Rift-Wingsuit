@@ -114,6 +114,10 @@ namespace OceanSurfaceEffects
         /// </summary>
         WaveSpectrumGPU m_waves;
 
+        public Vector3 positionOfTheSun = new Vector3(148, 127, 0);
+        public Vector3 centerPosition;
+        public Vector3 measureOfOcean = new Vector3(500, 1, 500);
+
         int m_frameCount = 0;
 
         void Start()
@@ -134,21 +138,21 @@ namespace OceanSurfaceEffects
                 Debug.Log("bias must not be less than 1, changing to 1");
             }
 
-            Mesh mesh = CreateRadialGrid(m_resolution, m_resolution);
-
-            float far = Camera.main.farClipPlane;
+            Mesh mesh = CreateRadialGrid(m_fourierGridSize, m_fourierGridSize);
 
             m_grid = new GameObject("Ocean Grid");
             m_grid.AddComponent<MeshFilter>();
             m_grid.AddComponent<MeshRenderer>();
             m_grid.GetComponent<Renderer>().material = m_oceanMat;
             m_grid.GetComponent<MeshFilter>().mesh = mesh;
-            m_grid.transform.localScale = new Vector3(far, 1, far);//Make radial grid have a radius equal to far plane
+            m_grid.transform.localScale = measureOfOcean;//Make radial grid have a radius equal to far plane
 
             m_oceanMat.SetTexture("_FresnelLookUp", m_fresnelLookUp);
             m_oceanMat.SetVector("_GridSizes", m_waves.gridSizes);
             m_oceanMat.SetFloat("_MaxLod", m_waves.mipMapLevels);
 
+            m_grid.transform.localPosition = centerPosition;
+            positionOfTheSun.Normalize();
         }
 
         void Update()
@@ -169,16 +173,17 @@ namespace OceanSurfaceEffects
             m_oceanMat.SetTexture("_Map0", m_waves.map0);
             m_oceanMat.SetTexture("_Map1", m_waves.map1);
             m_oceanMat.SetTexture("_Map2", m_waves.map2);
-            m_oceanMat.SetVector("_SunDir", new Vector3(-0.7f, -0.7f, 0.0f)* -1.0f);
+            m_oceanMat.SetVector("_SunDir", positionOfTheSun);
             m_oceanMat.SetVector("_SunColor", new Vector4(1.0f, 1.0f, 1.0f, 1.0f));
             m_oceanMat.SetFloat("_LodFadeDist", m_lodFadeDist);
 
-            //This makes sure the grid is always centered were the player is
-            Vector3 pos = Camera.main.transform.position;
-            pos.y = m_seaLevel;
+        }
 
-            m_grid.transform.localPosition = pos;
-
+        void OnGUI()
+        {
+            //float far = Camera.main.farClipPlane;
+            //m_grid.transform.localScale = new Vector3(far, 1, far);//Make radial grid have a radius equal to far plane
+            //GUILayout.Box("Vector: " + m_grid.transform.localScale.ToString());
         }
 
         void OnDestroy()
