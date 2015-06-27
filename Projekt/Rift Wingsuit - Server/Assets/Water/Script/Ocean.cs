@@ -31,7 +31,7 @@ namespace OceanSurfaceEffects
         /// like the height maps to the material.
         /// </summary>
         [SerializeField]
-        Material m_oceanMat;
+        private Material m_oceanMat;
 
         /// <summary>
         /// World space y position for the see level.
@@ -122,6 +122,12 @@ namespace OceanSurfaceEffects
 
         void Start()
         {
+            m_oceanMat = Resources.Load("Water/Texture/OceanPro") as Material;
+            if (m_oceanMat)
+            {
+                m_oceanMat.shader = Resources.Load("Water/Shader/OceanPro") as Shader;
+            }
+
             m_waves = new WaveSpectrumGPU(m_fourierGridSize, m_windSpeed, m_waveAmp, m_inverseWaveAge, m_ansio, m_gridSizes);
 
             CreateFresnelLookUp();

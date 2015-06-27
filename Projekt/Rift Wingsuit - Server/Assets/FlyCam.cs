@@ -6,7 +6,7 @@ public class FlyCam : MonoBehaviour
     public Controller controller;
     // smoothing
     public bool smooth = true;
-    public float acceleration = 0.1f;
+    public float acceleration = 0.2f;
     protected float actSpeed = 0.0f;			// keep it from 0 to 1
     public float speed = 50.0f;		// max speed of camera
     public bool inverted = false;
@@ -57,7 +57,7 @@ public class FlyCam : MonoBehaviour
 			
 			
 			// Movement of the camera
-			if (Input.GetKey(KeyCode.W)) dir.z += 1.0f;
+			if (Input.GetKey(KeyCode.W)) dir.z += 5.0f;
 			if (Input.GetKey(KeyCode.S)) dir.z -= 1.0f;
 			if (Input.GetKey(KeyCode.A)) dir.x -= 1.0f;
 			if (Input.GetKey(KeyCode.D)) dir.x += 1.0f;
@@ -66,7 +66,7 @@ public class FlyCam : MonoBehaviour
 			
 			//dir.z += 1.0f;
 			
-			dir.Normalize();
+			//dir.Normalize();
 		} else {
 			//Things to do here...
 			lastViewport = controller.CalculateViewport (inverted);

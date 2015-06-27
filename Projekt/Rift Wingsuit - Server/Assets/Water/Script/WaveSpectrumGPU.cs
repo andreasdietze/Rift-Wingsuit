@@ -250,7 +250,6 @@ namespace OceanSurfaceEffects
         /// </summary>
         float Spectrum(float kx, float ky)
         {
-
             float U10 = m_windSpeed;
 
             // phase speed
