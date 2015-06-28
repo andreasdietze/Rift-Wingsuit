@@ -5,6 +5,7 @@ public class KinectController : Controller
 {
     // Kincect control
     public HSDOutputText kinectOutput;
+	public StartLevelRayCaster slrc;
     private float kinectYaw;
     private float kinectPitch;
 	public bool inverted = false;
@@ -21,6 +22,7 @@ public class KinectController : Controller
 	public float flySpeed;
 
 	private bool serverInitiated = false;
+	private bool gameStart = false;
 
 	private NetworkManager nManager;
 	
@@ -47,9 +49,14 @@ public class KinectController : Controller
 				dir.y += 1.0f;
 		}
 
+		gameStart = slrc.startGame;
+		//Debug.Log (gameStart);
+
 		if (hasAutoVelocity) {
-			if(serverInitiated)
-				dir.z += flySpeed;
+			//if(serverInitiated){
+				if(gameStart)
+					dir.z += flySpeed;
+			//}
 		}
 
         dir.Normalize();
