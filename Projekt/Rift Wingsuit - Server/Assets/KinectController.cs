@@ -20,9 +20,12 @@ public class KinectController : Controller
 	public bool hasAutoVelocity = false;
 	public float flySpeed;
 
-	// Use this for initialization
-	void Start () {
+	private bool serverInitiated = false;
+
+	private NetworkManager nManager;
 	
+	void Start(){
+		nManager = (NetworkManager)GameObject.FindGameObjectWithTag("Network").GetComponent("NetworkManager");
 	}
 
     public override Vector3 GetDir()
@@ -44,8 +47,10 @@ public class KinectController : Controller
 				dir.y += 1.0f;
 		}
 
-		if(hasAutoVelocity)
-			dir.z += flySpeed;
+		if (hasAutoVelocity) {
+			if(serverInitiated)
+				dir.z += flySpeed;
+		}
 
         dir.Normalize();
 
@@ -86,5 +91,8 @@ public class KinectController : Controller
 	
 	// Update is called once per frame
 	void Update () {
+		//this.serverInitiated = nManager.serverInitiated;  // works
+		if (Input.GetKey(KeyCode.Return))
+			this.serverInitiated = true;
 	}
 }
