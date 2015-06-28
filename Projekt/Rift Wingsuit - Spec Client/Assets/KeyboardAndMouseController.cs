@@ -24,7 +24,7 @@ public class KeyboardAndMouseController : Controller {
         if (Input.GetKey(KeyCode.Q)) dir.y -= 1.0f;
         if (Input.GetKey(KeyCode.E)) dir.y += 1.0f;
 
-        dir.z += 1.0f;
+        //dir.z += 1.0f;
 
         dir.Normalize();
 

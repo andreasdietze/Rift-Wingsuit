@@ -3,6 +3,8 @@ using System.Collections;
 
 public class KeyboardAndMouseController : Controller {
 
+	public float flySpeed;
+
 	// Use this for initialization
 	void Start () {
 	
@@ -17,15 +19,13 @@ public class KeyboardAndMouseController : Controller {
     {
         Vector3 dir = new Vector3();			// create (0,0,0)
 
-        if (Input.GetKey(KeyCode.W)) dir.z += 1.0f;
-        if (Input.GetKey(KeyCode.S)) dir.z -= 1.0f;
-        if (Input.GetKey(KeyCode.A)) dir.x -= 1.0f;
-        if (Input.GetKey(KeyCode.D)) dir.x += 1.0f;
-        if (Input.GetKey(KeyCode.Q)) dir.y -= 1.0f;
-        if (Input.GetKey(KeyCode.E)) dir.y += 1.0f;
-
-        dir.z += 1.0f;
-
+		if (Input.GetKey(KeyCode.W)) dir.z += flySpeed;
+		if (Input.GetKey(KeyCode.S)) dir.z -= flySpeed;
+		if (Input.GetKey(KeyCode.A)) dir.x -= flySpeed;
+		if (Input.GetKey(KeyCode.D)) dir.x += flySpeed;
+		if (Input.GetKey(KeyCode.Q)) dir.y -= flySpeed;
+		if (Input.GetKey(KeyCode.E)) dir.y += flySpeed;
+	
         dir.Normalize();
 
         return dir;

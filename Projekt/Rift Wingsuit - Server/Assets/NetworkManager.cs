@@ -19,8 +19,8 @@ public class NetworkManager : MonoBehaviour
             if (GUI.Button(new Rect(100, 100, 250, 100), "Start Server"))
                 StartServer();
 
-            if (GUI.Button(new Rect(100, 250, 250, 100), "Refresh Hosts"))
-                RefreshHostList();
+           // if (GUI.Button(new Rect(100, 250, 250, 100), "Refresh Hosts"))
+               // RefreshHostList();
 
             if (hostList != null)
             {
@@ -71,7 +71,7 @@ public class NetworkManager : MonoBehaviour
 
     void OnConnectedToServer()
     {
-        SpawnPlayer();
+        //SpawnPlayer();
     }
 
 

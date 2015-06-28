@@ -16,10 +16,10 @@ public class NetworkManager : MonoBehaviour
 	{
 		if (!Network.isClient && !Network.isServer)
 		{
-			if (GUI.Button(new Rect(100, 100, 250, 100), "Start Server"))
-				StartServer();
+			//if (GUI.Button(new Rect(100, 100, 250, 100), "Start Server"))
+				//StartServer();
 			
-			if (GUI.Button(new Rect(100, 250, 250, 100), "Refresh Hosts"))
+			if (GUI.Button(new Rect(100, 100, 250, 100), "Refresh Hosts"))
 				RefreshHostList();
 			
 			if (hostList != null)

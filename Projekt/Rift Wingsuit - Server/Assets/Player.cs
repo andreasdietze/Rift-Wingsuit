@@ -10,20 +10,24 @@ public class Player : MonoBehaviour
     private float syncTime = 0f;
     private Vector3 syncStartPosition = Vector3.zero;
     private Vector3 syncEndPosition = Vector3.zero;
-	public GameObject cam; 
+	private GameObject cam; 
 
     void OnSerializeNetworkView(BitStream stream, NetworkMessageInfo info)
     {
         Vector3 syncPosition = Vector3.zero;
         Vector3 syncVelocity = Vector3.zero;
+
+		// Get rift cam by tag
+		cam = GameObject.FindGameObjectWithTag ("MainCamera");
+
         if (stream.isWriting)
         {
-			syncPosition = GetComponent<Rigidbody>().position + cam.GetComponent<Transform>().position;
+			syncPosition = GetComponent<Rigidbody>().position; //+ cam.GetComponent<Transform>().position;
             stream.Serialize(ref syncPosition);
 
 			//Debug.Log(cam.GetComponent<Transform>().position);
 
-            syncPosition = GetComponent<Rigidbody>().velocity;
+			syncVelocity = GetComponent<Rigidbody>().velocity;
             stream.Serialize(ref syncVelocity);
         }
         else
@@ -50,7 +54,7 @@ public class Player : MonoBehaviour
         if (GetComponent<NetworkView>().isMine)
         {
             InputMovement();
-            InputColorChange();
+            //InputColorChange();
         }
         else
         {
@@ -64,6 +68,7 @@ public class Player : MonoBehaviour
         /*if (Input.GetKey(KeyCode.W))
             GetComponent<Rigidbody>().MovePosition(GetComponent<Rigidbody>().position + Vector3.forward * speed * Time.deltaTime);
 
+
         if (Input.GetKey(KeyCode.S))
             GetComponent<Rigidbody>().MovePosition(GetComponent<Rigidbody>().position - Vector3.forward * speed * Time.deltaTime);
 
@@ -72,6 +77,8 @@ public class Player : MonoBehaviour
 
         if (Input.GetKey(KeyCode.A))
             GetComponent<Rigidbody>().MovePosition(GetComponent<Rigidbody>().position - Vector3.right * speed * Time.deltaTime);*/
+
+		//GetComponent<Rigidbody>().MovePosition(GetComponent<Rigidbody>().position += cam.GetComponent<Transform>().position);
     }
 
     private void SyncedMovement()
@@ -82,7 +89,7 @@ public class Player : MonoBehaviour
     }
 
 
-    private void InputColorChange()
+   /* private void InputColorChange()
     {
         if (Input.GetKeyDown(KeyCode.R))
             ChangeColorTo(new Vector3(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f)));
@@ -94,5 +101,5 @@ public class Player : MonoBehaviour
 
         if (GetComponent<NetworkView>().isMine)
             GetComponent<NetworkView>().RPC("ChangeColorTo", RPCMode.OthersBuffered, color);
-    }
+    }*/
 }
