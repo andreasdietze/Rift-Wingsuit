@@ -12,6 +12,8 @@ public class NetworkManager : MonoBehaviour
 	public GameObject playerPrefab;
 	public Transform camPos;
 
+	public bool serverJoined = false;
+
 	void OnGUI()
 	{
 		if (!Network.isClient && !Network.isServer)
@@ -80,11 +82,12 @@ public class NetworkManager : MonoBehaviour
 	void OnConnectedToServer()
 	{
 		Debug.Log("Server Joined");
+		serverJoined = true;
 		//SpawnPlayer();
 		
 	}
 	
-	    private void SpawnPlayer()
+	private void SpawnPlayer()
     {
         Network.Instantiate(playerPrefab, camPos.position, Quaternion.identity, 0);
     }

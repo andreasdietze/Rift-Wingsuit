@@ -11,6 +11,9 @@ public class LookAtCam : MonoBehaviour {
 	// Demo types for action cam
 	public bool follow = false; 
 	public bool circle = false;
+	public bool circlePivot = false;
+
+	private NetworkManager nManager;
 
 	// Use this for initialization
 	void Start () {
@@ -18,31 +21,55 @@ public class LookAtCam : MonoBehaviour {
 		//target.position = new Vector3 (0.0f, 0.0f, 0.0f);
 		cam = GameObject.FindGameObjectWithTag ("MainCamera").transform;
 		oldCamPos = cam.transform.position;
+		//cam.transform.Rotate (new Vector3 (0.0f, 1.0f, 0.0f), 180.0f, Space.World);
+		//cam.localRotation.eulerAngles.Set (Quaternion.AngleAxis (90.0f, new Vector3(1.0f, 0.0f, 0.0f)));
+		                    
+
+		nManager = (NetworkManager)GameObject.FindGameObjectWithTag("Network").GetComponent("NetworkManager");
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		cam = GameObject.FindGameObjectWithTag ("MainCamera").transform;
-		rot += 0.1f;
+		rot = 0.1f;
 
+		if (nManager.serverJoined) {
 
-		try{
-			target = GameObject.FindGameObjectWithTag ("Player").transform;
-			if(follow){
-				cam.transform.position = oldCamPos;
-				cam.transform.position = target.transform.position + new Vector3(10.0f, 0.0f, 0.0f);
+			try {
+				target = GameObject.FindGameObjectWithTag ("Player").transform;
+				if (follow) {
+					//cam.transform.position = oldCamPos;
+					cam.transform.position = target.transform.position + new Vector3 (10.0f, 0.0f, 0.0f);
+				}
+				if (circle) {
+					//cam.transform.position = oldCamPos;
+					cam.transform.position = target.transform.position + new Vector3 (0.0f, 0.0f, 0.0f);
+				}
+				if(circlePivot){
+					//cam.transform.position = oldCamPos;
+					///cam.transform.position = target.transform.position;
+					//cam.transform.Rotate(new Vector3(0.0f, rot, 0.0f));
+					//cam.transform.Translate(new Vector3(10.0f, 0.0f, 0.0f));
+
+				}
+			} catch (UnityException e) {
+				Debug.Log(e.Message);
 			}
-			if(circle){
-				cam.transform.position = oldCamPos;
-				cam.transform.position = target.transform.position + new Vector3(0.0f, 0.0f, 0.0f);
-			}
-		} catch(UnityException e){};
+		}
 
 		if (target) {
 			if(circle) {
 				cam.RotateAround(target.transform.position, new Vector3(0.0f, 1.0f, 0.0f), 1.0f);
 				//cam.transform.position += new Vector3(10.0f, 0.0f, 0.0f);
 				//cam.transform.position = Quaternion.AngleAxis(rot, Vector3.up) * cam.transform.position; //Rotate(new Vector3(0.0f, rot, 0.0f));
+			}
+			else if(circlePivot){
+				cam.transform.position = target.transform.position;
+
+				cam.transform.Rotate(new Vector3(0.0f, rot, 0.0f));
+				cam.transform.Translate(new Vector3(10.0f, 0.0f, 0.0f));
+				//cam.transform.Rotate(new Vector3(0.0f, 1.0f, 0.0f), 0.1f, Space.World);
+				//cam.transform.Translate(new Vector3(-10.0f, 0.0f, 0.0f));
 			}
 			else cam.LookAt (target.transform);
 		}
