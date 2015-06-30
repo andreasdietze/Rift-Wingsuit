@@ -12,14 +12,16 @@ public class NetworkManager : MonoBehaviour
 	public GameObject playerPrefab;
 	public Transform camPos;
 
+	public bool serverJoined = false;
+
 	void OnGUI()
 	{
 		if (!Network.isClient && !Network.isServer)
 		{
-			if (GUI.Button(new Rect(100, 100, 250, 100), "Start Server"))
-				StartServer();
+			//if (GUI.Button(new Rect(100, 100, 250, 100), "Start Server"))
+				//StartServer();
 			
-			if (GUI.Button(new Rect(100, 250, 250, 100), "Refresh Hosts"))
+			if (GUI.Button(new Rect(100, 100, 250, 100), "Refresh Hosts"))
 				RefreshHostList();
 			
 			if (hostList != null)
@@ -80,11 +82,12 @@ public class NetworkManager : MonoBehaviour
 	void OnConnectedToServer()
 	{
 		Debug.Log("Server Joined");
+		serverJoined = true;
 		//SpawnPlayer();
 		
 	}
 	
-	    private void SpawnPlayer()
+	private void SpawnPlayer()
     {
         Network.Instantiate(playerPrefab, camPos.position, Quaternion.identity, 0);
     }

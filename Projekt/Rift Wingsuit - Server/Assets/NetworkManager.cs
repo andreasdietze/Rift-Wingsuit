@@ -12,6 +12,8 @@ public class NetworkManager : MonoBehaviour
     public GameObject playerPrefab;
 	public Transform camPos;
 
+	public bool serverInitiated = false;
+
     void OnGUI()
     {
         if (!Network.isClient && !Network.isServer)
@@ -19,8 +21,8 @@ public class NetworkManager : MonoBehaviour
             if (GUI.Button(new Rect(100, 100, 250, 100), "Start Server"))
                 StartServer();
 
-            if (GUI.Button(new Rect(100, 250, 250, 100), "Refresh Hosts"))
-                RefreshHostList();
+           // if (GUI.Button(new Rect(100, 250, 250, 100), "Refresh Hosts"))
+               // RefreshHostList();
 
             if (hostList != null)
             {
@@ -37,6 +39,7 @@ public class NetworkManager : MonoBehaviour
     {
         Network.InitializeServer(5, 25000, !Network.HavePublicAddress());
         MasterServer.RegisterHost(typeName, gameName);
+		serverInitiated = true;
     }
 
     void OnServerInitialized()
@@ -52,6 +55,10 @@ public class NetworkManager : MonoBehaviour
             isRefreshingHostList = false;
             hostList = MasterServer.PollHostList();
         }
+
+		if (Input.GetKeyDown(KeyCode.Space))
+			StartServer();
+
     }
 
     private void RefreshHostList()
@@ -71,7 +78,7 @@ public class NetworkManager : MonoBehaviour
 
     void OnConnectedToServer()
     {
-        SpawnPlayer();
+        //SpawnPlayer();
     }
 
 

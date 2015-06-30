@@ -3,7 +3,7 @@ using System.Collections;
 
 public class FlyCam : MonoBehaviour
 {
-    public Controller controller;
+    
     // smoothing
     public bool smooth = true;
     public float acceleration = 0.2f;
@@ -14,27 +14,35 @@ public class FlyCam : MonoBehaviour
     protected Vector3 lastDir = new Vector3();
     protected Vector3 lastViewport = new Vector3();
 
-	public bool useKinect = false;
 	private Vector3 lastMouse = new Vector3(255, 255, 255);
 	public float sensitivity = 0.25f; 		// keep it from 0..1
+
+	// Global controller settings
+	public bool useKinect = false;
+	public bool useMouseKB = false;
+	public bool usePad = false;
+	private Controller controller;
+
 	// Kincect control
-	public HSDOutputText kinectOutput;
-	private float kinectYaw;
-	private float kinectPitch;
+	//public HSDOutputText kinectOutput;
+	//private float kinectYaw;
+	//private float kinectPitch;
 	
 	// Cfg
-	public bool enableYaw = true;
-	public bool enablePitch = true;
+	//public bool enableYaw = true;
+	//public bool enablePitch = true;
+
     void Start()
     {
-		if(!useKinect)
-        	controller = gameObject.AddComponent<KinectController>();
+		if (useKinect) controller = (Controller)GameObject.Find ("RiftCam").GetComponent ("KinectController"); //gameObject.AddComponent<KinectController> ();
+		else if (useMouseKB) controller = (Controller)GameObject.Find ("RiftCam").GetComponent ("KeyboardAndMouseController");
+		else if (usePad) controller = (Controller)GameObject.Find ("RiftCam").GetComponent ("XBoxController");	
     }
 
     void Update()
     {
 		Vector3 dir = new Vector3();// create (0,0,0)
-		if (useKinect) {
+		/*if (useKinect) {
 			// Kinect control
 			if (enableYaw)
 				kinectYaw = kinectOutput.ReturnDeltaY ();
@@ -67,11 +75,11 @@ public class FlyCam : MonoBehaviour
 			//dir.z += 1.0f;
 			
 			//dir.Normalize();
-		} else {
+		} else { */
 			//Things to do here...
 			lastViewport = controller.CalculateViewport (inverted);
 			dir = controller.GetDir ();
-		}
+		//}
 
         // Movement of the camera
 
