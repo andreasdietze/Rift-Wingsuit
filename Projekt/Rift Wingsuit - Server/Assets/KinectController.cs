@@ -25,6 +25,9 @@ public class KinectController : Controller
 	private bool gameStart = false;
 
 	private NetworkManager nManager;
+		
+	//Physic Global Variables
+	public Rigidbody rb;
 	
 	void Start(){
 		nManager = (NetworkManager)GameObject.FindGameObjectWithTag("Network").GetComponent("NetworkManager");
@@ -101,5 +104,32 @@ public class KinectController : Controller
 		//this.serverInitiated = nManager.serverInitiated;  // works
 		if (Input.GetKey(KeyCode.Return))
 			this.serverInitiated = true;
+	}
+		void FlyPhysic(float kinectYaw, float kinectPitch, Vector3 lastViewport){
+		// Update position based on the user height from the groud.
+		float xachse=transform.position.x; //go left and right
+		float yachse=transform.position.y; //high
+		if (transform.eulerAngles.y>0.0f){
+			yachse+=Mathf.Sqrt(yachse*9.8f)-rb.drag/60.0f;
+		}else{
+			yachse-=Mathf.Sqrt(yachse*9.8f)+rb.drag/60.0f;
+		}			
+		float zachse=transform.position.z+flySpeed/60.0f; //forward
+		transform.position = new Vector3(xachse,yachse,zachse);
+		// The Drag Force changeable based on the user wide
+		// value of kinectPitch:
+		//		between 0.0f and 0.009f => increase the drag force and decrease the Y-velocity of player
+		//		less than 0.009f 		=> decrease the drag force and increase the Y-velocity of player
+		// 		other					=> no change, because invalid movement 
+
+		if (kinectPitch>0.0f) {
+			if(kinectPitch<=0.009f){
+				rb.drag=20.0f+kinectPitch*1000.0f;
+			}else{
+				rb.drag=20.0f+kinectPitch*100.0f;
+			}
+			lastViewport.z -= kinectPitch;
+			transform.eulerAngles = lastViewport;
+		}
 	}
 }
