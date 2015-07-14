@@ -19,7 +19,7 @@ public class KinectController : Controller
 
 	// Const flyspeed
 	public bool hasAutoVelocity = false;
-	public float flySpeed;
+	private float flySpeed;			// between 0 and 1;
 
 	private bool serverInitiated = false;
 	private bool gameStart = false;
@@ -58,7 +58,7 @@ public class KinectController : Controller
 		if (hasAutoVelocity) {
 			//if(serverInitiated){
 				if(gameStart)
-					dir.z += flySpeed;
+				dir.z += flySpeed;
 			//}
 		}
 
@@ -95,8 +95,9 @@ public class KinectController : Controller
 			transform.eulerAngles = lastViewport;
 			lastViewport = Input.mousePosition;
 		}
+		//Debug.Log ("Fall speed: " + rb.velocity.y);
 
-		return transform.eulerAngles; //lastViewport;
+		return  lastViewport; //FlyPhysic(kinectYaw, kinectPitch, lastViewport);  // transform.eulerAngles; // lastViewport
     }
 	
 	// Update is called once per frame
@@ -105,17 +106,19 @@ public class KinectController : Controller
 		if (Input.GetKey(KeyCode.Return))
 			this.serverInitiated = true;
 	}
-		void FlyPhysic(float kinectYaw, float kinectPitch, Vector3 lastViewport){
+
+	Vector3 FlyPhysic(float kinectYaw, float kinectPitch, Vector3 lastViewport){
 		// Update position based on the user height from the groud.
 		float xachse=transform.position.x; //go left and right
 		float yachse=transform.position.y; //high
 		if (transform.eulerAngles.y>0.0f){
-			yachse+=Mathf.Sqrt(yachse*9.8f)-rb.drag/60.0f;
+			;//yachse+=Mathf.Sqrt(yachse*9.8f)-rb.drag/60.0f;
 		}else{
-			yachse-=Mathf.Sqrt(yachse*9.8f)+rb.drag/60.0f;
+			;//yachse-=Mathf.Sqrt(yachse*9.8f)+rb.drag/60.0f;
 		}			
-		float zachse=transform.position.z+flySpeed/60.0f; //forward
-		transform.position = new Vector3(xachse,yachse,zachse);
+		float zachse=transform.position.z; // +flySpeed/60.0f; //forward
+		//transform.position = new Vector3(xachse,yachse,zachse);
+		lastViewport = new Vector3 (xachse, yachse, zachse);
 		// The Drag Force changeable based on the user wide
 		// value of kinectPitch:
 		//		between 0.0f and 0.009f => increase the drag force and decrease the Y-velocity of player
@@ -129,7 +132,8 @@ public class KinectController : Controller
 				rb.drag=20.0f+kinectPitch*100.0f;
 			}
 			lastViewport.z -= kinectPitch;
-			transform.eulerAngles = lastViewport;
+			//transform.eulerAngles = lastViewport;
 		}
+		return lastViewport;
 	}
 }
