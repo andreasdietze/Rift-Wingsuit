@@ -61,7 +61,7 @@ public class FlyCam : MonoBehaviour
 		// TODO: - get playerorientation x-axis (test first with cam)
 		// 		 - set the max fall speed in dependence of the angle between x0 and x90
 		float playerXR = GameObject.Find ("RiftCam").transform.rotation.eulerAngles.x;
-		Debug.Log ("Player rotation x: " + playerXR);
+		//Debug.Log ("Player rotation x: " + playerXR);
 		
 		// Set max fall speed
 		// TODO: - intervall could be from 1 * 198 in X pos to 2.5 * 198 in arrowPos (angle about 90?)
@@ -76,12 +76,12 @@ public class FlyCam : MonoBehaviour
 			ms = 500.0f;
 		}
 
-		Debug.Log ("Fall time" + (int)Time.time);
-		Debug.Log ("Fall speed ms/s: " +  Mathf.Abs(ms));  //Mathf.Abs(playerRidgid.velocity.y)); 
-		Debug.Log ("Fall speed km/h: " +  Mathf.Abs(MStoKMH (ms))); //Mathf.Abs(playerRidgid.velocity.y * 3.6f));
+		//Debug.Log ("Fall time" + (int)Time.time);
+		//Debug.Log ("Fall speed ms/s: " +  Mathf.Abs(ms));  //Mathf.Abs(playerRidgid.velocity.y)); 
+		//Debug.Log ("Fall speed km/h: " +  Mathf.Abs(MStoKMH (ms))); //Mathf.Abs(playerRidgid.velocity.y * 3.6f));
 	
 		// Set computed fall velocity 
-		playerRidgid.velocity = fallVelocity;
+		//playerRidgid.velocity = fallVelocity;
 
         // Movement of the camera
         if (dir != Vector3.zero)
