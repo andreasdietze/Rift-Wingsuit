@@ -5,17 +5,33 @@ public class LookAtCam : MonoBehaviour {
 	
 	// Camera transformation
 	private Transform cam; 
+
 	// Target (player) transformation
 	private Transform target;
+
 	// Tmp cam position
 	private Vector3 oldCamPos;
-	private float rot = 0.0f;
+
+	// Final value for rotation on y-axis
+	private float rotationVelocity 		= 0.0f;
+
+	// The value we increase the rotation every frame
+	public float rotationSpeed 			= 0.0f;
+
 	// Index for cam style via keyboard
 	int index = 0;
+
 	// Distance between cam and player in world units
-	public float distanceToPlayer = 1.0f;
+	public float distanceToPlayer 		= 1.0f;
+
 	// For distanceToPlayer lerp
-	private float oldDistanceToPlayer = 0.0f;
+	private float oldMinDistToPlayer 	= 0.0f;
+	private float oldMaxDistToPlayer 	= 0.0f;
+	public float minDistanceToPlayer	= 0.0f;
+	public float maxDistanceToPlayer 	= 0.0f;
+	public float lerpSpeed				= 0.0f;
+	private float lerpedDistance		= 0.0f;
+	private float lerpTimer				= 0.0f;
 	
 	// Camera styles for action cam:
 	// - followLeft: 	look from the left to the player
@@ -26,7 +42,9 @@ public class LookAtCam : MonoBehaviour {
 	// - circleAround: 	look at the player and circle around him
 	// - circle: ...
 	private enum ActionCam{followLeft, followRight, followAbove, followBehind, followFront, followHead,
-		circleAround, circle};
+		circleAroundY, circleAroundX};
+
+	// Enum object of ActionCam
 	private ActionCam actionCam = ActionCam.followLeft;
 	
 	// Update cam styles by unity menue interface
@@ -36,8 +54,8 @@ public class LookAtCam : MonoBehaviour {
 	public bool followBehind 	= false;
 	public bool followFront 	= false;
 	public bool followHead 		= false;
-	public bool circleAround	= false;
-	public bool circle 			= false;
+	public bool circleAroundY	= false;
+	public bool circleAroundX 	= false;
 	
 	
 	// Instance to network managing. Verifies that client has joind a server.
@@ -50,11 +68,22 @@ public class LookAtCam : MonoBehaviour {
 		
 		// Find networkManager
 		nManager = (NetworkManager)GameObject.FindGameObjectWithTag("Network").GetComponent("NetworkManager");
+
+		// Save properties by unity settings
+		oldMinDistToPlayer = minDistanceToPlayer;
+		oldMaxDistToPlayer = maxDistanceToPlayer;
+		//Debug.Log ("oldMinDist: " + oldMinDistToPlayer + " oldMaxDist: " + oldMaxDistToPlayer);
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		rot += 1.0f;
+
+		// Keep from 0 - 359 (0 == 360)
+		if (rotationVelocity % 359 == 0.0f)
+			rotationVelocity = 0.0f;
+
+		// Increase rotation value by rotationSpeed;
+		rotationVelocity += rotationSpeed;
 
 		// Check if client has joined a server.
 		// This is necessary because the playerprefab is automatically generated.
@@ -100,33 +129,69 @@ public class LookAtCam : MonoBehaviour {
 				cam.transform.eulerAngles = target.transform.eulerAngles;
 				cam.transform.position = target.transform.position;
 				break;
-			case ActionCam.circleAround: 
-				Vector3 pos = target.transform.position;
-				cam.transform.position = pos;// + new Vector3(10.0f, 0.0f, 0.0f);//target.transform.position;
-				
-				//cam.transform.Rotate(new Vector3(0.0f, rot, 0.0f));
-				cam.transform.rotation = Quaternion.Euler(0, 90 + rot, 0);
-				cam.transform.Translate(new Vector3(10.0f, 0.0f, 0.0f));
-				
-				//cam.LookAt(target.transform);
-				//cam.rotation *= Quaternion.Euler(0, 90, 0);
-				
-				//cam.transform.Translate(new Vector3(10.0f, 0.0f, 0.0f));
-				
-				//cam.transform.Rotate(new Vector3(0.0f, 10.1f, 0.0f));
-				//cam.transform.Rotate(new Vector3(0.0f, 1.0f, 0.0f), 0.1f, Space.World);
-				//cam.transform.Translate(new Vector3(-10.0f, 0.0f, 0.0f));
+			case ActionCam.circleAroundY:
+
+				// Add delta time each frame to lerpTimer
+				lerpTimer += Time.deltaTime;
+
+				// Reset the lerp if max value has been reached
+				if(lerpedDistance >= oldMaxDistToPlayer - 0.2f){ // small offset if lerp doesnt reach 25.0f
+					// Reset lerp parameter
+					minDistanceToPlayer = oldMinDistToPlayer;
+					maxDistanceToPlayer = oldMaxDistToPlayer;
+
+					// Reset lerped distance
+					lerpedDistance = oldMinDistToPlayer;
+
+					// Reset the lerp timer
+					lerpTimer = 0.0f;
+
+					// And finally set another cam style ;)
+					index = 7;
+				}
+
+				// Distance to player can be lerped now
+				lerpedDistance = Mathf.Lerp(minDistanceToPlayer, maxDistanceToPlayer, lerpTimer * lerpSpeed);
+				//Debug.Log("lerpDist: " + lerpedDistance);
+				//Debug.Log ("time: " + lerpTimer);
+
+				// Get target position and circle around it on y
+				cam.transform.position = target.transform.position + 
+					new Vector3(Mathf.Sin(rotationVelocity / 180 * Mathf.PI) * lerpedDistance,
+					            0.0f,
+					            Mathf.Cos(rotationVelocity / 180 * Mathf.PI) * lerpedDistance);
+				cam.transform.rotation = Quaternion.LookRotation(target.transform.position - cam.transform.position); 
 				break;
-			case ActionCam.circle: 
-				cam.LookAt(target.transform);
-				cam.RotateAround(target.transform.position, new Vector3(0.0f, 1.0f, 0.0f), 1.0f);
+			case ActionCam.circleAroundX:
+
+				// Add delta time each frame to lerpTimer
+				lerpTimer += Time.deltaTime;
 				
-				//Vector3 CmT = target.transform.position - cam.position;
-				//float dist = Mathf.Sqrt(CmT.x * CmT.x + CmT.y * CmT.y + CmT.z * CmT.z);
-				//Debug.Log("dist: " + dist);
-				//if(dist >= 10.0f)
-				//cam.position = target.transform.position;//+= new Vector3(0.0f, 0.0f, dist);
-				//cam.transform.position = Quaternion.AngleAxis(rot, Vector3.up) * cam.transform.position; //Rotate(new Vector3(0.0f, rot, 0.0f));
+				// Reset the lerp if max value has been reached
+				if(lerpedDistance >= oldMaxDistToPlayer - 0.2f){ // small offset if lerp doesnt reach 25.0f
+					// Reset lerp parameter
+					minDistanceToPlayer = oldMinDistToPlayer;
+					maxDistanceToPlayer = oldMaxDistToPlayer;
+					
+					// Reset lerped distance
+					lerpedDistance = oldMinDistToPlayer;
+					
+					// Reset the lerp timer
+					lerpTimer = 0.0f;
+					
+					// And finally set another cam style ;)
+					index = 6;
+				}
+				
+				// Distance to player can be lerped now
+				lerpedDistance = Mathf.Lerp(minDistanceToPlayer, maxDistanceToPlayer, lerpTimer * lerpSpeed);
+
+				// Get target position and circle around it on y
+				cam.transform.position = target.transform.position + 
+					new Vector3(0.0f,
+					            Mathf.Sin(rotationVelocity / 180 * Mathf.PI) * distanceToPlayer,
+					            Mathf.Cos(rotationVelocity / 180 * Mathf.PI) * distanceToPlayer);
+				cam.transform.rotation = Quaternion.LookRotation(target.transform.position - cam.transform.position); 
 				break;
 			}
 		}
@@ -145,12 +210,14 @@ public class LookAtCam : MonoBehaviour {
 			actionCam = ActionCam.followAbove;
 		else if(followBehind)
 			actionCam = ActionCam.followBehind;
+		else if(followFront)
+			actionCam = ActionCam.followFront;
 		else if(followHead)
 			actionCam = ActionCam.followHead;
-		else if(circleAround)
-			actionCam = ActionCam.circleAround;
-		else if(circle)
-			actionCam = ActionCam.circle;
+		else if(circleAroundY)
+			actionCam = ActionCam.circleAroundY;
+		else if(circleAroundX)
+			actionCam = ActionCam.circleAroundX;
 		else // Default actionCam
 			actionCam = ActionCam.followBehind;
 		
@@ -161,10 +228,10 @@ public class LookAtCam : MonoBehaviour {
 		if (Input.GetKeyDown (KeyCode.C))
 			index++;
 
-		if (index == 6)
+		if (index == 8)
 			index = 0;
 
-		Debug.Log ("Actual actionCam index: " + index);
+		//Debug.Log ("Actual actionCam index: " + index);
 
 		switch (index) {
 			case 0: actionCam = ActionCam.followLeft; break;
@@ -173,6 +240,8 @@ public class LookAtCam : MonoBehaviour {
 			case 3: actionCam = ActionCam.followBehind; break;
 			case 4: actionCam = ActionCam.followFront; break;
 			case 5: actionCam = ActionCam.followHead; break;
+			case 6: actionCam = ActionCam.circleAroundY; break;
+			case 7: actionCam = ActionCam.circleAroundX; break;
 		}
 	}
 
