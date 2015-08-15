@@ -17,10 +17,16 @@ public class Player : MonoBehaviour
 	private Quaternion syncEndRotation = Quaternion.identity;
 	private Quaternion syncStartRotation = Quaternion.identity;
 	
+	// OVR cam fin orientation
+	public Quaternion syncEndOVRRotation = Quaternion.identity;
+	private Quaternion syncStartOVRRotation = Quaternion.identity;
+	public Quaternion lerpedOVRRotation = Quaternion.identity;
+	
 	void OnSerializeNetworkView(BitStream stream, NetworkMessageInfo info){
 		Vector3 syncPosition = Vector3.zero;
 		Vector3 syncVelocity = Vector3.zero;
 		Quaternion syncRotation = Quaternion.identity;
+		Quaternion syncOVRRotation = Quaternion.identity;
 	
 		if (stream.isWriting){ // Send data
 			syncPosition = GetComponent<Rigidbody>().position;
@@ -37,6 +43,9 @@ public class Player : MonoBehaviour
 			stream.Serialize(ref syncVelocity);
 			stream.Serialize(ref syncRotation);
 			
+			// OVR cam view has only to be received
+			stream.Serialize(ref syncOVRRotation);
+			
 			syncTime = 0f;
 			syncDelay = Time.time - lastSynchronizationTime;
 			lastSynchronizationTime = Time.time;
@@ -46,6 +55,11 @@ public class Player : MonoBehaviour
 			
 			syncEndRotation = syncRotation;
 			syncStartRotation = GetComponent<Rigidbody>().rotation;
+			
+			// at the moment player rotates by rift -> this rot is for head only
+			syncEndOVRRotation = syncOVRRotation; 
+			syncStartOVRRotation = GetComponent<Rigidbody>().rotation;
+			
 		}
 	}
 	
@@ -65,7 +79,12 @@ public class Player : MonoBehaviour
 	private void SyncedMovement(){
 		syncTime += Time.deltaTime;
 		GetComponent<Rigidbody>().position = Vector3.Lerp(syncStartPosition, syncEndPosition, syncTime / syncDelay);
-		GetComponent<Rigidbody>().rotation =  Quaternion.Lerp(syncStartRotation, syncEndRotation, syncTime / syncDelay); 
+		GetComponent<Rigidbody>().rotation =  Quaternion.Lerp(syncStartRotation, syncEndRotation, syncTime / syncDelay);
+		//lerpedOVRRotation = Quaternion.Lerp(syncStartOVRRotation, syncEndOVRRotation, syncTime / syncDelay);
+		
+		// TODO: Set cam to endSyncOVRRot
+		//endSyncOVRRotation = syncOVRRotation;
+		//Debug.Log("OVR: " + endSyncOVRRotation);
 	}
 	
 	

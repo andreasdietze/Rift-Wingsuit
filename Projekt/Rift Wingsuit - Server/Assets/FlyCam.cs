@@ -128,7 +128,7 @@ public class FlyCam : MonoBehaviour
 
     void OnGUI()
     {
-        GUILayout.Box("Vector: " + lastViewport.ToString());
+        //GUILayout.Box("Vector: " + lastViewport.ToString());
         //GUI.Label(new Rect(10, 130, 150, 150), "Delta: " + kinectY.ToString(), kinectOutput.labelFont);
     }
 }

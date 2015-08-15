@@ -16,12 +16,24 @@ public class Player : MonoBehaviour
 	// Start- and endrotation for lerp
 	private Quaternion syncEndRotation = Quaternion.identity;
 	private Quaternion syncStartRotation = Quaternion.identity;
-	
+
+	// Get ovr cam rig
+	//private Component oculus;
+	private Transform oculusTransform;
+	//private OVRCameraRig oculus;
+
+
 	void OnSerializeNetworkView(BitStream stream, NetworkMessageInfo info){
+		//oculus = (Component)GameObject.FindGameObjectWithTag ("MainCamera").GetComponent("OVRCameraRig");
+		//oculusTransform = GameObject.FindGameObjectWithTag("MainCamera").GetComponent ("Tracker").GetComponent ("RiftCenter").transform;
+		//oculus = (OVRCameraRig)GameObject.FindGameObjectWithTag ("MainCamera").GetComponent("OVRCameraRig");
+		oculusTransform = GameObject.FindGameObjectWithTag ("RiftCenter").transform;
+		//Debug.Log("Rift: " + oculus);
 		Vector3 syncPosition = Vector3.zero;
 		Vector3 syncVelocity = Vector3.zero;
 		Quaternion syncRotation = Quaternion.identity;
-		
+		Quaternion syncOVRRotation = Quaternion.identity;
+
 		if (stream.isWriting){ // Send data
 			syncPosition = GetComponent<Rigidbody>().position;
 			stream.Serialize(ref syncPosition);
@@ -31,6 +43,10 @@ public class Player : MonoBehaviour
 			
 			syncRotation = GetComponent<Rigidbody>().rotation;
 			stream.Serialize(ref syncRotation);
+
+			// OVR cam view has only to be sent
+			syncOVRRotation = oculusTransform.transform.rotation;// oculusTransform.rotation; //oculus.transform.rotation;
+			stream.Serialize(ref syncOVRRotation);
 		}
 		else {// Receive data
 			stream.Serialize(ref syncPosition);

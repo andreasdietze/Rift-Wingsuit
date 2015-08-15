@@ -56,10 +56,12 @@ public class LookAtCam : MonoBehaviour {
 	public bool followHead 		= false;
 	public bool circleAroundY	= false;
 	public bool circleAroundX 	= false;
-	
-	
+
 	// Instance to network managing. Verifies that client has joind a server.
 	private NetworkManager nManager;
+	
+	private Player player;
+	private Quaternion ovrRot;
 	
 	// Use this for initialization
 	void Start () {
@@ -89,6 +91,9 @@ public class LookAtCam : MonoBehaviour {
 		// This is necessary because the playerprefab is automatically generated.
 		if (nManager.serverJoined) {
 			try {
+				player = (Player)GameObject.FindGameObjectWithTag ("Player").GetComponent("Player");
+				ovrRot = player.syncEndOVRRotation;//lerpedOVRRotation;
+				//Debug.Log("ovrRot: " + ovrRot);
 				target = GameObject.FindGameObjectWithTag ("Player").transform;
 			} catch (UnityException e) {
 				Debug.Log(e.Message);
@@ -125,8 +130,8 @@ public class LookAtCam : MonoBehaviour {
 					(target.transform.rotation * (Vector3.forward * distanceToPlayer));
 				cam.LookAt(target.transform);
 				break;
-			case ActionCam.followHead: // TODO: add rift orientation
-				cam.transform.eulerAngles = target.transform.eulerAngles;
+			case ActionCam.followHead: // TODO: add rift orientation -> two quaternions will be mulitplied if you want to add them
+				cam.transform.rotation =  target.transform.rotation * ovrRot; // eulerAngles // target.transform.rotation *
 				cam.transform.position = target.transform.position;
 				break;
 			case ActionCam.circleAroundY:
@@ -146,7 +151,7 @@ public class LookAtCam : MonoBehaviour {
 					// Reset the lerp timer
 					lerpTimer = 0.0f;
 
-					// And finally set another cam style ;)
+					// And finally set another cam style
 					index = 7;
 				}
 
@@ -179,14 +184,14 @@ public class LookAtCam : MonoBehaviour {
 					// Reset the lerp timer
 					lerpTimer = 0.0f;
 					
-					// And finally set another cam style ;)
+					// And finally set another cam style
 					index = 6;
 				}
 				
 				// Distance to player can be lerped now
 				lerpedDistance = Mathf.Lerp(minDistanceToPlayer, maxDistanceToPlayer, lerpTimer * lerpSpeed);
 
-				// Get target position and circle around it on y
+				// Get target position and circle around it on x
 				cam.transform.position = target.transform.position + 
 					new Vector3(0.0f,
 					            Mathf.Sin(rotationVelocity / 180 * Mathf.PI) * distanceToPlayer,
@@ -244,6 +249,17 @@ public class LookAtCam : MonoBehaviour {
 			case 7: actionCam = ActionCam.circleAroundX; break;
 		}
 	}
+
+	
+	 bool showText = true;
+     Rect textArea = new Rect(300,0,Screen.width, Screen.height);
+     
+     private void OnGUI()
+     {
+         if(nManager.serverJoined && showText)
+			GUI.Label(textArea, ovrRot.ToString());
+     }
+
 
 	
 	// Set random actionCam by timer
