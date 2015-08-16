@@ -63,6 +63,8 @@ public class LookAtCam : MonoBehaviour {
 	private Player player;
 	private Quaternion ovrRot;
 	
+	public bool enableOVROrientation = false;
+	
 	// Use this for initialization
 	void Start () {
 		// Find main camera with editor properties
@@ -131,7 +133,10 @@ public class LookAtCam : MonoBehaviour {
 				cam.LookAt(target.transform);
 				break;
 			case ActionCam.followHead: // TODO: add rift orientation -> two quaternions will be mulitplied if you want to add them
-				cam.transform.rotation =  target.transform.rotation * ovrRot; // eulerAngles // target.transform.rotation *
+				if(enableOVROrientation)
+					cam.transform.rotation =  target.transform.rotation * ovrRot; // eulerAngles // target.transform.rotation *
+				else
+					cam.transform.rotation =  target.transform.rotation;
 				cam.transform.position = target.transform.position;
 				break;
 			case ActionCam.circleAroundY:
