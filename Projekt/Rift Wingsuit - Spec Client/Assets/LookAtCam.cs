@@ -137,7 +137,7 @@ public class LookAtCam : MonoBehaviour {
 					cam.transform.rotation =  target.transform.rotation * ovrRot; // eulerAngles // target.transform.rotation *
 				else
 					cam.transform.rotation =  target.transform.rotation;
-				cam.transform.position = target.transform.position;
+				cam.transform.position = target.transform.position + (cam.transform.rotation * (Vector3.up * 1.8f));
 				break;
 			case ActionCam.circleAroundY:
 
@@ -207,6 +207,7 @@ public class LookAtCam : MonoBehaviour {
 		}
 		UpdateActionCamByMenue();
 		UpdateActionCamByKeyboard();
+		UpdateDistanceToPlayer ();
 	}
 	
 	// Set actionCam by unity menue. Bit ugly implementation but
@@ -253,6 +254,16 @@ public class LookAtCam : MonoBehaviour {
 			case 6: actionCam = ActionCam.circleAroundY; break;
 			case 7: actionCam = ActionCam.circleAroundX; break;
 		}
+	}
+	
+	private void UpdateDistanceToPlayer(){
+
+		if(Input.GetKey(KeyCode.UpArrow))
+		   distanceToPlayer += 0.1f;
+
+	   if(Input.GetKey(KeyCode.DownArrow))
+		   distanceToPlayer -= 0.1f;
+
 	}
 
 	
