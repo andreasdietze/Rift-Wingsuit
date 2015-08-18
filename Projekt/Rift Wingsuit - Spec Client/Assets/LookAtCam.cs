@@ -101,19 +101,27 @@ public class LookAtCam : MonoBehaviour {
 				Debug.Log(e.Message);
 			}
 		}
-
+		
+		Vector3 from 	= Vector3.zero;
+		Vector3 to 		= Vector3.zero;
 		// If a player has been generated we now can setup any of the provided camera styles.
 		if(target){
 			switch(actionCam){
 			case ActionCam.followLeft: 
 				cam.transform.position = target.transform.position +
+					(target.transform.rotation * (Vector3.up * 1.5f)) +
 					(target.transform.rotation * (Vector3.left * distanceToPlayer));
-				cam.LookAt(target.transform);
+				from = target.transform.position + (target.transform.rotation * (Vector3.up * 1.5f));
+				to 	 = cam.transform.position;
+				cam.transform.rotation = Quaternion.LookRotation(from - to); 
 				break;				
 			case ActionCam.followRight: 
 				cam.transform.position = target.transform.position +
+					(target.transform.rotation * (Vector3.up * 1.5f)) +
 					(target.transform.rotation * (Vector3.right * distanceToPlayer));
-				cam.LookAt(target.transform);
+				from = target.transform.position + (target.transform.rotation * (Vector3.up * 1.5f));
+				to 	 = cam.transform.position;
+				cam.transform.rotation = Quaternion.LookRotation(from - to); 
 				break;				
 			case ActionCam.followAbove:
 				cam.transform.position = target.transform.position +
@@ -122,22 +130,26 @@ public class LookAtCam : MonoBehaviour {
 				break;
 			case ActionCam.followBehind: 
 				cam.transform.position = target.transform.position +
+					(target.transform.rotation * (Vector3.up * 1.5f)) +
 					(target.transform.rotation * (Vector3.up * distanceToPlayer)) +
 					(target.transform.rotation * (Vector3.back * distanceToPlayer));
-				cam.LookAt(target.transform);
+				from = target.transform.position + (target.transform.rotation * (Vector3.up * 1.5f));
+				to 	 = cam.transform.position;
+				cam.transform.rotation = Quaternion.LookRotation(from - to); 
 				break;
 			case ActionCam.followFront: 
 				cam.transform.position = target.transform.position +
+					(target.transform.rotation * (Vector3.up * 1.5f)) +
 					(target.transform.rotation * (Vector3.up * distanceToPlayer / 10)) +
 					(target.transform.rotation * (Vector3.forward * distanceToPlayer));
-				cam.LookAt(target.transform);
+				from = target.transform.position + (target.transform.rotation * (Vector3.up * 1.5f));
+				to 	 = cam.transform.position;
+				cam.transform.rotation = Quaternion.LookRotation(from - to); 
 				break;
-			case ActionCam.followHead: // TODO: add rift orientation -> two quaternions will be mulitplied if you want to add them
-				if(enableOVROrientation)
-					cam.transform.rotation =  target.transform.rotation * ovrRot; // eulerAngles // target.transform.rotation *
-				else
-					cam.transform.rotation =  target.transform.rotation;
-				cam.transform.position = target.transform.position + (cam.transform.rotation * (Vector3.up * 1.8f));
+			case ActionCam.followHead:
+				cam.transform.rotation = enableOVROrientation ? cam.transform.rotation = ovrRot :  
+																cam.transform.rotation = target.transform.rotation;
+				cam.transform.position = target.transform.position + (target.transform.rotation * (Vector3.up * 1.8f));
 				break;
 			case ActionCam.circleAroundY:
 
@@ -166,11 +178,14 @@ public class LookAtCam : MonoBehaviour {
 				//Debug.Log ("time: " + lerpTimer);
 
 				// Get target position and circle around it on y
-				cam.transform.position = target.transform.position + 
+				cam.transform.position = target.transform.position + (target.transform.rotation * (Vector3.up * 1.5f)) +
 					new Vector3(Mathf.Sin(rotationVelocity / 180 * Mathf.PI) * lerpedDistance,
 					            0.0f,
 					            Mathf.Cos(rotationVelocity / 180 * Mathf.PI) * lerpedDistance);
-				cam.transform.rotation = Quaternion.LookRotation(target.transform.position - cam.transform.position); 
+				//cam.transform.rotation = Quaternion.LookRotation(target.transform.position - cam.transform.position); 
+				from = target.transform.position + (target.transform.rotation * (Vector3.up * 1.5f));
+				to 	 = cam.transform.position;
+				cam.transform.rotation = Quaternion.LookRotation(from - to); 
 				break;
 			case ActionCam.circleAroundX:
 
@@ -197,11 +212,14 @@ public class LookAtCam : MonoBehaviour {
 				lerpedDistance = Mathf.Lerp(minDistanceToPlayer, maxDistanceToPlayer, lerpTimer * lerpSpeed);
 
 				// Get target position and circle around it on x
-				cam.transform.position = target.transform.position + 
+				cam.transform.position = target.transform.position + (target.transform.rotation * (Vector3.up * 1.5f)) +
 					new Vector3(0.0f,
 					            Mathf.Sin(rotationVelocity / 180 * Mathf.PI) * distanceToPlayer,
 					            Mathf.Cos(rotationVelocity / 180 * Mathf.PI) * distanceToPlayer);
-				cam.transform.rotation = Quaternion.LookRotation(target.transform.position - cam.transform.position); 
+				//cam.transform.rotation = Quaternion.LookRotation(target.transform.position - cam.transform.position); 
+				from = target.transform.position + (target.transform.rotation * (Vector3.up * 1.5f));
+				to 	 = cam.transform.position;
+				cam.transform.rotation = Quaternion.LookRotation(from - to); 
 				break;
 			}
 		}

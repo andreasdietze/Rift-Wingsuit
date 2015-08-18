@@ -53,15 +53,41 @@ public class FlyCam : MonoBehaviour
 		float g = 9.81f / s; // 9.81m/s²
 		float h = (g * s) / 2; // Fallstrecke = (g * t²) / 2
 		float v = (g * s); // Mathf.Sqrt (s) Fallgeschwindigkeit
-		
+		//Debug.Log (v);
 		fallVelocity = playerRidgid.velocity;
-		fallVelocity.y -= v * Time.deltaTime; // h * Time.deltaTime;
-	
+		//fallVelocity.y -= 9.81f * Time.deltaTime; // h * Time.deltaTime;
+		//Debug.Log (fallVelocity);
 		// Set maximal fall speed in x-position
 		// TODO: - get playerorientation x-axis (test first with cam)
 		// 		 - set the max fall speed in dependence of the angle between x0 and x90
+		Transform camTransform = GameObject.Find ("RiftCam").transform;
 		float playerXR = GameObject.Find ("RiftCam").transform.rotation.eulerAngles.x;
-		//Debug.Log ("Player rotation x: " + playerXR);
+		Debug.Log ("Player rotation x: " + playerXR);
+
+
+
+		// Dämpfung
+		float attenuation = 0.0f;
+
+		// Lock player rotation on x axis between 0 - 90
+		float rotXLock = 0.0f;
+
+		// Lock forward vector (climbing is not calculated in this case)
+		if (playerXR <= 1.0f) {
+			rotXLock = 1.0f;
+			//camTransform.rotation.eulerAngles = new Vector3(0.0f, 1.0f, 0.0f);
+		}
+
+		// Lock down vector
+		if (playerXR >= 90.0f) {
+			rotXLock = 90.0f;
+			//camTransform.rotation.eulerAngles = new Vector3(camTransform.rotation.eulerAngles.x, 90.0f, camTransform.rotation.eulerAngles.z);
+		}
+
+		if (playerXR <= 0.0f)
+			attenuation = 1.0f;
+
+
 		
 		// Set max fall speed
 		// TODO: - intervall could be from 1 * 198 in X pos to 2.5 * 198 in arrowPos (angle about 90?)
@@ -71,9 +97,11 @@ public class FlyCam : MonoBehaviour
 
 		float ms = fallVelocity.y;  // meter per second
 
-		if (MStoKMH (ms) > 500.0f) { // && x-position -> playerorientationX
-			fallVelocity.y = 500.0f;
-			ms = 500.0f;
+		// Dampfungsfaktor abhängig von der Fläche A 
+		// -> A abhängig von Winkel des Spielers zwischen forward und down.
+		if (Mathf.Abs(MStoKMH (ms)) > 100.0f) { // && x-position -> playerorientationX
+			fallVelocity.y = -100.0f  / 3.6f;
+			ms = -100.0f / 3.6f;
 		}
 
 		//Debug.Log ("Fall time" + (int)Time.time);

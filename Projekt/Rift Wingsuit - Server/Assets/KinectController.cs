@@ -19,7 +19,7 @@ public class KinectController : Controller
 
 	// Const flyspeed
 	public bool hasAutoVelocity = false;
-	private float flySpeed;			// between 0 and 1;
+	private float flySpeed = 0.0f;			// between 0 and 1;
 
 	private bool serverInitiated = false;
 	private bool gameStart = false;
@@ -61,6 +61,8 @@ public class KinectController : Controller
 				dir.z += flySpeed;
 			//}
 		}
+
+
 
         dir.Normalize();
 

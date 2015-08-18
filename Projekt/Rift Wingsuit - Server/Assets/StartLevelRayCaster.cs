@@ -21,8 +21,9 @@ public class StartLevelRayCaster : MonoBehaviour {
 
 		// Set ray manual
 		ray.origin = cam.transform.position;
-		ray.direction = cam.transform.rotation * Vector3.forward;
+		ray.direction = cam.transform.rotation * (Vector3.forward * rayDist);
 		//ray.direction = cam.transform.TransformDirection;
+		Debug.DrawRay (ray.origin, ray.direction * rayDist, Color.cyan);
 
 		RaycastHit hit;
 		if (coll.Raycast (ray, out hit, rayDist)) {
