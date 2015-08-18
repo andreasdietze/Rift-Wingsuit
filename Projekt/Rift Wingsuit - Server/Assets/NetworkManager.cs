@@ -84,6 +84,6 @@ public class NetworkManager : MonoBehaviour
 
     private void SpawnPlayer()
     {
-        Network.Instantiate(playerPrefab, camPos.position, camPos.rotation, 0);
+		Network.Instantiate(playerPrefab, camPos.position, camPos.rotation, 0); //  * Quaternion.Euler(new Vector3(90.0f, 0.0f, 0.0f))
     }
 }

@@ -3,7 +3,8 @@ using System.Collections;
 
 public class FlyCam : MonoBehaviour
 {
-    
+	private StartLevelRayCaster slrc;
+
     // smoothing
     public bool smooth = true;
     public float acceleration = 0.2f;
@@ -24,8 +25,12 @@ public class FlyCam : MonoBehaviour
 	private Controller controller;
 	public Rigidbody playerRidgid;
 
+	public bool startFly = false;
+
 	// Fly physics
 	Vector3 fallVelocity = new Vector3();
+
+
 
     void Start()
     {
@@ -53,6 +58,12 @@ public class FlyCam : MonoBehaviour
 		float g = 9.81f / s; // 9.81m/s²
 		float h = (g * s) / 2; // Fallstrecke = (g * t²) / 2
 		float v = (g * s); // Mathf.Sqrt (s) Fallgeschwindigkeit
+
+		slrc = (StartLevelRayCaster)GameObject.FindGameObjectWithTag ("MainCamera").GetComponent ("StartLevelRayCaster");
+		if (slrc.startGame) {
+			playerRidgid.useGravity = true;
+		}
+
 		//Debug.Log (v);
 		fallVelocity = playerRidgid.velocity;
 		//fallVelocity.y -= 9.81f * Time.deltaTime; // h * Time.deltaTime;
@@ -62,8 +73,13 @@ public class FlyCam : MonoBehaviour
 		// 		 - set the max fall speed in dependence of the angle between x0 and x90
 		Transform camTransform = GameObject.Find ("RiftCam").transform;
 		float playerXR = GameObject.Find ("RiftCam").transform.rotation.eulerAngles.x;
-		Debug.Log ("Player rotation x: " + playerXR);
+		//Debug.Log ("Player rotation x: " + playerXR);
 
+		// http://wingsuit.de/wingsuit-lernen/fur-fallschirmspringer/aerodynamische-grundlagen/
+		// The easy way:
+		// - Speed ca 130-250 kmh bei fallrate von 40-50 kmh
+		// Math way:
+		// Formel: av = gvy * sin(playerRotX) - dämpfung * V²
 
 
 		// Dämpfung
@@ -99,9 +115,10 @@ public class FlyCam : MonoBehaviour
 
 		// Dampfungsfaktor abhängig von der Fläche A 
 		// -> A abhängig von Winkel des Spielers zwischen forward und down.
-		if (Mathf.Abs(MStoKMH (ms)) > 100.0f) { // && x-position -> playerorientationX
-			fallVelocity.y = -100.0f  / 3.6f;
-			ms = -100.0f / 3.6f;
+		if (Mathf.Abs(MStoKMH (ms)) > 50.0f) { // && x-position -> playerorientationX
+			fallVelocity.y = -50.0f  / 3.6f;
+			ms = -50.0f / 3.6f;
+			startFly = true;
 		}
 
 		//Debug.Log ("Fall time" + (int)Time.time);
@@ -109,7 +126,7 @@ public class FlyCam : MonoBehaviour
 		//Debug.Log ("Fall speed km/h: " +  Mathf.Abs(MStoKMH (ms))); //Mathf.Abs(playerRidgid.velocity.y * 3.6f));
 	
 		// Set computed fall velocity 
-		//playerRidgid.velocity = fallVelocity;
+		playerRidgid.velocity = fallVelocity;
 
         // Movement of the camera
         if (dir != Vector3.zero)

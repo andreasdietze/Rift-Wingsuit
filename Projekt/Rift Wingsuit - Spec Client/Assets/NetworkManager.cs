@@ -89,7 +89,7 @@ public class NetworkManager : MonoBehaviour
 	
 	private void SpawnPlayer()
     {
-        Network.Instantiate(playerPrefab, camPos.position, Quaternion.identity, 0);
+        Network.Instantiate(playerPrefab, camPos.position, Quaternion.identity, 0);   // Quaternion.identity
     }
 
 }

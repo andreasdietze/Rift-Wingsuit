@@ -19,18 +19,20 @@ public class KinectController : Controller
 
 	// Const flyspeed
 	public bool hasAutoVelocity = false;
-	private float flySpeed = 0.0f;			// between 0 and 1;
+	public float flySpeed = 0.0f;			// between 0 and 1;
 
 	private bool serverInitiated = false;
 	private bool gameStart = false;
 
 	private NetworkManager nManager;
+	private FlyCam flyCam;
 		
 	//Physic Global Variables
 	public Rigidbody rb;
 	
 	void Start(){
 		nManager = (NetworkManager)GameObject.FindGameObjectWithTag("Network").GetComponent("NetworkManager");
+		flyCam = (FlyCam)GameObject.FindGameObjectWithTag ("MainCamera").GetComponent ("FlyCam");
 	}
 
     public override Vector3 GetDir()
@@ -57,8 +59,12 @@ public class KinectController : Controller
 
 		if (hasAutoVelocity) {
 			//if(serverInitiated){
-				if(gameStart)
-				dir.z += flySpeed;
+			if(gameStart){
+				if(flyCam.startFly){
+					flySpeed = 1.0f;
+					dir.z += flySpeed;
+				}
+			}
 			//}
 		}
 
