@@ -8,8 +8,11 @@ public class ConfigOverrider : MonoBehaviour {
     public Vector3 startPosition = new Vector3(5000, 5000, 5000);
 
 	// Use this for initialization
-	void Start () {
+    void Start()
+    {
         Terrain.activeTerrain.basemapDistance = detailDistance;
+        Terrain.activeTerrain.detailObjectDistance = detailDistance / 4;
+
         if (overrideStartPos)
         {
             Camera.main.transform.position = startPosition;

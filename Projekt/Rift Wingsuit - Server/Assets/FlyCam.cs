@@ -57,7 +57,7 @@ public class FlyCam : MonoBehaviour
 			
 			
 			// Movement of the camera
-			if (Input.GetKey(KeyCode.W)) dir.z += 1.0f;
+			if (Input.GetKey(KeyCode.W)) dir.z += 5.0f;
 			if (Input.GetKey(KeyCode.S)) dir.z -= 1.0f;
 			if (Input.GetKey(KeyCode.A)) dir.x -= 1.0f;
 			if (Input.GetKey(KeyCode.D)) dir.x += 1.0f;
@@ -66,7 +66,7 @@ public class FlyCam : MonoBehaviour
 			
 			//dir.z += 1.0f;
 			
-			dir.Normalize();
+			//dir.Normalize();
 		} else {
 			//Things to do here...
 			lastViewport = controller.CalculateViewport (inverted);
