@@ -7,7 +7,7 @@ public class ViewIDAllocator : MonoBehaviour {
 	 * http://docs.unity3d.com/ScriptReference/Network.AllocateViewID.html
 	 * 
 	 * Auch hier wird ein Objekt mit einer falschen View-ID erstellt (falsche ID + 1...)
-	 * Lösung: Das Objekt muss direkt aus vom Prefab des Servers stammen. 
+	 * Lösung: Das Objekt muss direkt vom Prefab des Servers stammen. 
 	 * Mit manuell erstellte Komponenten kann es zu Fehlern kommen.
 	 * Das Script wird von daher nicht mehr benötigt, dient aber weiterhin als Bsp. 
 	 * für Objekterzeugung über eine viewID und eine RPC Aufruf (daher alte ID + 1)

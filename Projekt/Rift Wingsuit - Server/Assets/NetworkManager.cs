@@ -3,87 +3,76 @@ using System.Collections;
 
 public class NetworkManager : MonoBehaviour
 {
-    private const string typeName = "RiftWingsuit";
-    private const string gameName = "Wingsuit-Game";
-
-    private bool isRefreshingHostList = false;
-    private HostData[] hostList;
-
-    public GameObject playerPrefab;
+	// Lobby settings
+	private const string typeName = "RiftWingsuit";
+	private const string gameName = "Wingsuit-Game";
+	
+	// Host data for global unity master server
+	// Note: global -> global unity master server
+	private bool isRefreshingHostList = false;
+	private HostData[] hostList;
+	
+	// Player prefab and spawn settings (by cam)
+	public GameObject playerPrefab;
 	public Transform camPos;
-
+	
 	public bool serverInitiated = false;
-
-    void OnGUI()
-    {
-        if (!Network.isClient && !Network.isServer)
-        {
-            if (GUI.Button(new Rect(100, 100, 250, 100), "Start Server"))
-                StartServer();
-
-           // if (GUI.Button(new Rect(100, 250, 250, 100), "Refresh Hosts"))
-               // RefreshHostList();
-
-            if (hostList != null)
-            {
-                for (int i = 0; i < hostList.Length; i++)
-                {
-                    if (GUI.Button(new Rect(400, 100 + (110 * i), 300, 100), hostList[i].gameName))
-                        JoinServer(hostList[i]);
-                }
-            }
-        }
-    }
-
-    private void StartServer()
-    {
-        Network.InitializeServer(5, 25000, !Network.HavePublicAddress());
-        MasterServer.RegisterHost(typeName, gameName);
+	
+	// User for seperate master server
+	// Note: need to set your own ip (local or net)
+	public bool useOwnMasterServer = true;
+	
+	// Provide server network gui (todo: extend game settings)
+	void OnGUI()
+	{
+		// Start new server
+		if (!Network.isClient && !Network.isServer)
+		{
+			if (GUI.Button(new Rect(100, 100, 250, 100), "Start Server"))
+				StartServer();
+		}
+	}
+	
+	// Setup own master server and connect to it or connect to 
+	// global unity master server
+	private void StartServer()
+	{
+		// Settings for own master server (test)
+		if (useOwnMasterServer) {
+			MasterServer.ipAddress = "192.168.0.173";
+			MasterServer.port = 23466;
+			Network.natFacilitatorIP = "192.168.0.173";
+			Network.natFacilitatorPort = 50005;
+		}
+		
+		// Init server
+		Network.InitializeServer(2,	
+		                         25000,
+		                         !Network.HavePublicAddress());
+		
+		MasterServer.RegisterHost(typeName, gameName);
 		serverInitiated = true;
-    }
-
-    void OnServerInitialized()
-    {
-        SpawnPlayer();
-    }
-
-
-    void Update()
-    {
-        if (isRefreshingHostList && MasterServer.PollHostList().Length > 0)
-        {
-            isRefreshingHostList = false;
-            hostList = MasterServer.PollHostList();
-        }
-
+	}
+	
+	void OnServerInitialized(){
+		SpawnPlayer();
+	}
+	
+	// void OnConnectedToServer(){
+	//SpawnPlayer();
+	// }
+	
+	// Start server by key input (if oculus vp overrides server gui)
+	void Update(){
 		if (Input.GetKeyDown(KeyCode.Space))
 			StartServer();
-
-    }
-
-    private void RefreshHostList()
-    {
-        if (!isRefreshingHostList)
-        {
-            isRefreshingHostList = true;
-            MasterServer.RequestHostList(typeName);
-        }
-    }
-
-
-    private void JoinServer(HostData hostData)
-    {
-        Network.Connect(hostData);
-    }
-
-    void OnConnectedToServer()
-    {
-        //SpawnPlayer();
-    }
-
-
-    private void SpawnPlayer()
-    {
-		Network.Instantiate(playerPrefab, camPos.position, camPos.rotation, 0); //  * Quaternion.Euler(new Vector3(90.0f, 0.0f, 0.0f))
-    }
+	}
+	
+	// Init a new player prefab
+	private void SpawnPlayer(){
+		Network.Instantiate(playerPrefab,
+		                    camPos.position,
+		                    camPos.rotation, //  * Quaternion.Euler(new Vector3(90.0f, 0.0f, 0.0f))
+		                    0); 
+	}
 }

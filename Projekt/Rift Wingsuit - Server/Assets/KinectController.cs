@@ -57,15 +57,15 @@ public class KinectController : Controller
 		gameStart = slrc.startGame;
 		//Debug.Log (gameStart);
 
-		if (hasAutoVelocity) {
-			//if(serverInitiated){
-			if(gameStart){
-				if(flyCam.startFly){
-					flySpeed = 1.0f;
-					dir.z += flySpeed;
+		if (hasAutoVelocity) {				// by unity gui (debug)
+			if(serverInitiated){  			// by network	(works)
+				if(gameStart){				// by raycast	(works)
+					if(flyCam.startFly){	// by fly physics (test, works)
+						flySpeed = 1.0f;
+						dir.z += flySpeed;
+					}
 				}
 			}
-			//}
 		}
 
 
@@ -110,9 +110,9 @@ public class KinectController : Controller
 	
 	// Update is called once per frame
 	void Update () {
-		//this.serverInitiated = nManager.serverInitiated;  // works
-		if (Input.GetKey(KeyCode.Return))
-			this.serverInitiated = true;
+		this.serverInitiated = nManager.serverInitiated;  	// works
+		//if (Input.GetKey(KeyCode.Return))					// test
+			//this.serverInitiated = true;
 	}
 
 	Vector3 FlyPhysic(float kinectYaw, float kinectPitch, Vector3 lastViewport){
