@@ -11,9 +11,9 @@ public class ConfigOverrider : MonoBehaviour {
 	// Use this for initialization
     void Start()
     {
-        detailObjectDistance = detailDistance / 2;
-        Terrain.activeTerrain.basemapDistance = detailDistance;
-        Terrain.activeTerrain.detailObjectDistance = detailObjectDistance;
+        //detailObjectDistance = detailDistance / 2;
+        //Terrain.activeTerrain.basemapDistance = detailDistance;
+        //Terrain.activeTerrain.detailObjectDistance = detailObjectDistance;
 
         if (overrideStartPos)
         {
@@ -24,6 +24,8 @@ public class ConfigOverrider : MonoBehaviour {
 	// Update is called once per frame
     void Update()
     {
-        Terrain.activeTerrain.basemapDistance = detailDistance;
+		detailObjectDistance = detailDistance / 2;
+		Terrain.activeTerrain.basemapDistance = detailDistance;
+		Terrain.activeTerrain.detailObjectDistance = detailObjectDistance;
 	}
 }

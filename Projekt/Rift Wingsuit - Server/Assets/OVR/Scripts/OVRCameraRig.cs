@@ -68,8 +68,11 @@ public class OVRCameraRig : MonoBehaviour
 	private readonly string trackerAnchorName = "TrackerAnchor";
 	private readonly string eyeAnchorName = "EyeAnchor";
 	private readonly string legacyEyeAnchorName = "Camera";
-	
-	public bool actionCam = false;
+
+	// Wurde für alte Version über zwei Displays verwendet
+	//public bool actionCam = false;
+
+	public float farClipPlane = 10000.0f;
 	
 	#region Unity Messages
 	private void Awake()
@@ -103,8 +106,8 @@ public class OVRCameraRig : MonoBehaviour
 		// http://forum.unity3d.com/threads/2-cameras-running-the-same-time.44911/
 		
 		// Override clipping params
-		leftEyeCamera.farClipPlane = 10000;
-		rightEyeCamera.farClipPlane = 10000;
+		leftEyeCamera.farClipPlane = farClipPlane;
+		rightEyeCamera.farClipPlane = farClipPlane;
 		
 		// Set depth params for multiple cams like actioncam.
 		// This settings represent the foreground settings for the rift.
@@ -117,11 +120,11 @@ public class OVRCameraRig : MonoBehaviour
 		leftEyeCamera.clearFlags = CameraClearFlags.Skybox;
 		rightEyeCamera.clearFlags = CameraClearFlags.Skybox;
 		
-		if (actionCam) {
+		//if (actionCam) {
 			
-			leftEyeCamera.rect = new Rect (0.5f, 0.0f, 0.25f, 1.0f);
-			rightEyeCamera.rect = new Rect (0.75f, 0.0f, 0.25f, 1.0f);
-		}
+			//leftEyeCamera.rect = new Rect (0.5f, 0.0f, 0.25f, 1.0f);
+			//rightEyeCamera.rect = new Rect (0.75f, 0.0f, 0.25f, 1.0f);
+		//}
 		
 		//leftEyeCamera.pixelRect = new Rect (0.5f, 0.0f, 0.75f, 1.0f);
 		//rightEyeCamera.pixelRect = new Rect (0.075f, 0.0f, 1.0f, 1.0f);
@@ -179,8 +182,8 @@ public class OVRCameraRig : MonoBehaviour
 			rightEyeCamera = ConfigureCamera(OVREye.Right);
 			
 			// Override clipping params
-			leftEyeCamera.farClipPlane = 10000;
-			rightEyeCamera.farClipPlane = 10000;
+			leftEyeCamera.farClipPlane = farClipPlane;
+			rightEyeCamera.farClipPlane = farClipPlane;
 			
 			// Set depth params for multiple cams like actioncam.
 			// This settings represent the foreground settings for the rift.
@@ -193,10 +196,10 @@ public class OVRCameraRig : MonoBehaviour
 			leftEyeCamera.clearFlags = CameraClearFlags.Skybox;
 			rightEyeCamera.clearFlags = CameraClearFlags.Skybox;
 			
-			if(actionCam){ 
-				leftEyeCamera.rect = new Rect (0.5f, 0.0f, 0.25f, 1.0f);
-				rightEyeCamera.rect = new Rect (0.75f, 0.0f, 0.25f, 1.0f);
-			}
+			//if(actionCam){ 
+				//leftEyeCamera.rect = new Rect (0.5f, 0.0f, 0.25f, 1.0f);
+				//rightEyeCamera.rect = new Rect (0.75f, 0.0f, 0.25f, 1.0f);
+			//}
 			
 			//leftEyeCamera.pixelRect = new Rect (0.5f, 0.0f, 0.75f, 1.0f);
 			//rightEyeCamera.pixelRect = new Rect (0.075f, 0.0f, 1.0f, 1.0f);
