@@ -22,6 +22,10 @@ public class Player : MonoBehaviour
 	private Transform oculusTransform;
 	//private OVRCameraRig oculus;
 
+	// Player status
+	private int score = 0;
+	public bool collideWithWP = false;
+
 
 	void OnSerializeNetworkView(BitStream stream, NetworkMessageInfo info){
 		//oculus = (Component)GameObject.FindGameObjectWithTag ("MainCamera").GetComponent("OVRCameraRig");
@@ -76,12 +80,23 @@ public class Player : MonoBehaviour
 		else{
 			SyncedMovement();
 		}
+
+		UpdatePlayerStatus ();
 	}
 	
 	private void SyncedMovement(){
 		syncTime += Time.deltaTime;
 		GetComponent<Rigidbody>().position = Vector3.Lerp(syncStartPosition, syncEndPosition, syncTime / syncDelay);
 		GetComponent<Rigidbody>().rotation =  Quaternion.Lerp(syncStartRotation, syncEndRotation, syncTime / syncDelay); 
+	}
+
+	// TODO: Send via network
+	private void UpdatePlayerStatus(){
+		if (collideWithWP) {
+			score += 10;
+			Debug.Log("Player score: " + score);
+		}
+		collideWithWP = false;
 	}
 	
 	

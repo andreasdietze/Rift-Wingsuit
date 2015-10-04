@@ -37,6 +37,7 @@ public class NetworkManager : MonoBehaviour
 	// global unity master server
 	private void StartServer()
 	{
+
 		// Settings for own master server (test)
 		if (useOwnMasterServer) {
 			MasterServer.ipAddress = "192.168.0.173";
