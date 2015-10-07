@@ -35,6 +35,9 @@ public class FlyCam : MonoBehaviour
 
 	GUIStyle font;
 
+    Quaternion startingRot;
+    Vector3 startingPos;
+
     void Start()
     {
 		if (useKinect) controller = (Controller)GameObject.Find ("RiftCam").GetComponent ("KinectController"); //gameObject.AddComponent<KinectController> ();
@@ -45,6 +48,8 @@ public class FlyCam : MonoBehaviour
 
 		font = new GUIStyle ();
 		font.fontSize = 28;
+        startingPos = playerRidgid.position;
+        startingRot = playerRidgid.rotation;
     }
 
     void Update()
@@ -65,7 +70,7 @@ public class FlyCam : MonoBehaviour
 		float s = Mathf.Pow (Time.time, 2); // s²
 		float g = 9.81f / s; // 9.81m/s²
 		float h = (g * s) / 2; // Fallstrecke = (g * t²) / 2
-		float v = (g * s); // Mathf.Sqrt (s) Fallgeschwindigkeit
+		float v = (g * Time.time); // Mathf.Sqrt (s) Fallgeschwindigkeit
 
 		slrc = (StartLevelRayCaster)GameObject.FindGameObjectWithTag ("MainCamera").GetComponent ("StartLevelRayCaster");
 		if (slrc.startGame) {
@@ -209,8 +214,13 @@ public class FlyCam : MonoBehaviour
     // Reload level if player collides with terrain
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Boden"))
-            Application.LoadLevel(0);
+
+		if (other.CompareTag ("Boden")) {
+			Application.LoadLevel(0);
+            playerRidgid.rotation= startingRot;
+            playerRidgid.position= startingPos;
+        }
+            
 
 		// gamelogics
 		// TODO: -> set player to spezified possition after colliding with the terrain
