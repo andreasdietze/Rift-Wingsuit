@@ -29,10 +29,15 @@ public class KinectController : Controller
 		
 	//Physic Global Variables
 	public Rigidbody rb;
+
+	private GUIStyle font;
 	
 	void Start(){
 		nManager = (NetworkManager)GameObject.FindGameObjectWithTag("Network").GetComponent("NetworkManager");
 		flyCam = (FlyCam)GameObject.FindGameObjectWithTag ("MainCamera").GetComponent ("FlyCam");
+
+		font = new GUIStyle ();
+		font.fontSize = 28;
 	}
 
     public override Vector3 GetDir()
@@ -60,16 +65,14 @@ public class KinectController : Controller
 		if (hasAutoVelocity) {				// by unity gui (debug)
 			if(serverInitiated){  			// by network	(works)
 				if(gameStart){				// by raycast	(works)
-					if(flyCam.startFly){	// by fly physics (test, works)
+					if(flyCam.startFly){	// by fly physics (works)
 						flySpeed = 1.0f;
 						dir.z += flySpeed;
 					}
 				}
 			}
 		}
-
-
-
+		
         dir.Normalize();
 
         return dir;
@@ -95,19 +98,27 @@ public class KinectController : Controller
 			if (!inverted)
 				lastViewport.y = -lastViewport.y;
 		}
+		
         lastViewport *= sensitivity;
         lastViewport = new Vector3(transform.eulerAngles.x + lastViewport.y + kinectPitch,
 		                           transform.eulerAngles.y + lastViewport.x + kinectYaw, 0);// * sensitivity;
 
+
+		// Lock cam rotation from 0-90 on x
 		if (useMouse) {
 			transform.eulerAngles = lastViewport;
+			Vector3 rot = transform.eulerAngles;
+			if(rot.x >= 90.0f)
+				rot.x = 0.0f;
+
+			transform.eulerAngles = rot;
 			lastViewport = Input.mousePosition;
 		}
-		//Debug.Log ("Fall speed: " + rb.velocity.y);
 
+		//Debug.Log ("Fall speed: " + rb.velocity.y);
 		return  lastViewport; //FlyPhysic(kinectYaw, kinectPitch, lastViewport);  // transform.eulerAngles; // lastViewport
     }
-	
+
 	// Update is called once per frame
 	void Update () {
 		this.serverInitiated = nManager.serverInitiated;  	// works
@@ -115,6 +126,15 @@ public class KinectController : Controller
 			//this.serverInitiated = true;
 	}
 
+	void OnGUI(){
+		GUI.Label(new Rect(10, 280, 150, 150), "Viewport: " + lastViewport.ToString(), font);
+	}
+
+
+
+
+
+	// Michael 
 	Vector3 FlyPhysic(float kinectYaw, float kinectPitch, Vector3 lastViewport){
 		// Update position based on the user height from the groud.
 		float xachse=transform.position.x; //go left and right

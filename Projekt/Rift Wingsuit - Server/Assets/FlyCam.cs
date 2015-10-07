@@ -30,13 +30,21 @@ public class FlyCam : MonoBehaviour
 	// Fly physics
 	Vector3 fallVelocity = new Vector3();
 
+	NetworkManager nManager;
+	Vector3 addToZ = Vector3.zero;
 
+	GUIStyle font;
 
     void Start()
     {
 		if (useKinect) controller = (Controller)GameObject.Find ("RiftCam").GetComponent ("KinectController"); //gameObject.AddComponent<KinectController> ();
 		else if (useMouseKB) controller = (Controller)GameObject.Find ("RiftCam").GetComponent ("KeyboardAndMouseController");
 		else if (usePad) controller = (Controller)GameObject.Find ("RiftCam").GetComponent ("XBoxController");	
+
+		nManager = (NetworkManager)GameObject.FindGameObjectWithTag("Network").GetComponent("NetworkManager");
+
+		font = new GUIStyle ();
+		font.fontSize = 28;
     }
 
     void Update()
@@ -147,16 +155,55 @@ public class FlyCam : MonoBehaviour
             else
                 actSpeed = 0.0f;
         }
+
+		if(startFly)
+			addToZ = UpdateSpeedSimple ();
 		
         if (smooth)
-            transform.Translate(lastDir * actSpeed * speed * Time.deltaTime);
+            //transform.Translate(lastDir * actSpeed * speed * Time.deltaTime);
+			transform.Translate((lastDir + addToZ) * speed * actSpeed * Time.deltaTime);
         else
             transform.Translate(dir * speed * Time.deltaTime); 
+
+
     }
 	
 	// 1 m/s = 3,6 km/h   -> fall speed m/s * 3.6f
 	private float MStoKMH(float ms){
 			return ms * 3.6f;
+	}
+
+	Vector3 UpdateSpeed(){
+		// Winkel zwischen z- und y-Achse: ---------
+		// 0° x -> vec3.back			   | \
+		// 90°  x -> vec3.down			   |    \
+		// alpha -> x rotation   		   | alpha \
+		float alpha = transform.rotation.eulerAngles.x;
+		if(alpha >= 90.0f)
+			alpha = 90.0f; // -alpha; 
+
+
+		// Geschindigkeit toAdd (z):
+		// toAdd = gravityVec * sin(alpha) - (attenuation) * V²
+		// Dämpfung abhängig von x rotation, 90° -> A = 1.0, 0° -> A = 0.0
+		// att   =  xrot / 90
+		Vector3 gravity = Vector3.zero;
+		if (nManager.serverInitiated)
+			gravity =  new Vector3(0.0f, playerRidgid.velocity.y, 0.0f);   // Vector3.down;  playerRidgid.velocity
+		float att = alpha / 90.0f; 
+		Vector3 toAdd = (gravity * Mathf.Sin (alpha)); //  - ((1.0f * att) / 2); 
+		return toAdd - (Vector3.forward * ((1.0f * att) / 2)); 
+	}
+
+	Vector3 UpdateSpeedSimple(){
+		// Winkel zwischen z- und y-Achse:
+		float alpha = transform.rotation.eulerAngles.x;
+		if(alpha >= 90.0f)
+			alpha = 0.0f;
+
+		float att = alpha / 90.0f;
+
+		return  Vector3.forward * att;
 	}
 
     // Reload level if player collides with terrain
@@ -175,5 +222,7 @@ public class FlyCam : MonoBehaviour
     {
         //GUILayout.Box("Vector: " + lastViewport.ToString());
         //GUI.Label(new Rect(10, 130, 150, 150), "Delta: " + kinectY.ToString(), kinectOutput.labelFont);
+		Vector3 finSpeed = (lastDir + addToZ) * speed * actSpeed * Time.deltaTime;
+		GUI.Label(new Rect(10, 250, 150, 150), "Speed : " + finSpeed.z, font);
     }
 }
