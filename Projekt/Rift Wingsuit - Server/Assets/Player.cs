@@ -23,7 +23,7 @@ public class Player : MonoBehaviour
 	//private OVRCameraRig oculus;
 
 	// Player status
-	private int score = 0;
+	private int score = 0; // nothing to lerp :) 
 	public bool collideWithWP = false;
 
 
@@ -37,20 +37,30 @@ public class Player : MonoBehaviour
 		Vector3 syncVelocity = Vector3.zero;
 		Quaternion syncRotation = Quaternion.identity;
 		Quaternion syncOVRRotation = Quaternion.identity;
+		int syncScore = 0;
 
 		if (stream.isWriting){ // Send data
+			// Final Position
 			syncPosition = GetComponent<Rigidbody>().position;
 			stream.Serialize(ref syncPosition);
-			
+
+			// Final velocity
 			syncVelocity = GetComponent<Rigidbody>().velocity;
 			stream.Serialize(ref syncVelocity);
-			
+
+			// Final player rotation
 			syncRotation = GetComponent<Rigidbody>().rotation;
 			stream.Serialize(ref syncRotation);
 
-			// OVR cam view has only to be sent
+			// Send OVR cam (seperate oculus head rotation)
 			syncOVRRotation = oculusTransform.transform.rotation;// oculusTransform.rotation; //oculus.transform.rotation;
 			stream.Serialize(ref syncOVRRotation);
+
+			// Send score
+			syncScore = score;
+			stream.Serialize(ref syncScore);
+			//Debug.Log(syncScore);
+
 		}
 		else {// Receive data
 			stream.Serialize(ref syncPosition);
@@ -79,9 +89,10 @@ public class Player : MonoBehaviour
 		}
 		else{
 			SyncedMovement();
-		}
 
+		}
 		UpdatePlayerStatus ();
+
 	}
 	
 	private void SyncedMovement(){

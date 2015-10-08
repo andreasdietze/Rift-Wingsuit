@@ -21,6 +21,8 @@ public class NetworkManager : MonoBehaviour
 	// User for seperate master server
 	// Note: need to set your own ip (local or net)
 	public bool useOwnMasterServer = true;
+
+	// 
 	
 	// Provide server network gui (todo: extend game settings)
 	void OnGUI()
@@ -40,9 +42,9 @@ public class NetworkManager : MonoBehaviour
 
 		// Settings for own master server (test)
 		if (useOwnMasterServer) {
-			MasterServer.ipAddress = "192.168.0.173";
+			MasterServer.ipAddress = "192.168.0.172";
 			MasterServer.port = 23466;
-			Network.natFacilitatorIP = "192.168.0.173";
+			Network.natFacilitatorIP = "192.168.0.172";
 			Network.natFacilitatorPort = 50005;
 		}
 		

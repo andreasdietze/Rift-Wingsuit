@@ -22,11 +22,16 @@ public class Player : MonoBehaviour
 	private Quaternion syncStartOVRRotation = Quaternion.identity;
 	public Quaternion lerpedOVRRotation = Quaternion.identity;
 	
+	// Player status
+	public int score = 0;
+	public int finScore =0 ;
+	
 	void OnSerializeNetworkView(BitStream stream, NetworkMessageInfo info){
 		Vector3 syncPosition = Vector3.zero;
 		Vector3 syncVelocity = Vector3.zero;
 		Quaternion syncRotation = Quaternion.identity;
 		Quaternion syncOVRRotation = Quaternion.identity;
+		int syncScore = 0;
 	
 		if (stream.isWriting){ // Send data
 			syncPosition = GetComponent<Rigidbody>().position;
@@ -42,9 +47,9 @@ public class Player : MonoBehaviour
 			stream.Serialize(ref syncPosition);
 			stream.Serialize(ref syncVelocity);
 			stream.Serialize(ref syncRotation);
-			
 			// OVR cam view has only to be received
 			stream.Serialize(ref syncOVRRotation);
+			stream.Serialize(ref syncScore);
 			
 			syncTime = 0f;
 			syncDelay = Time.time - lastSynchronizationTime;
@@ -59,6 +64,9 @@ public class Player : MonoBehaviour
 			// at the moment player rotates by rift -> this rot is for head only
 			syncEndOVRRotation = syncOVRRotation; 
 			syncStartOVRRotation = GetComponent<Rigidbody>().rotation;
+			
+			score = syncScore;
+			//Debug.Log(syncScore);
 			
 		}
 	}
@@ -81,7 +89,7 @@ public class Player : MonoBehaviour
 		GetComponent<Rigidbody>().position = Vector3.Lerp(syncStartPosition, syncEndPosition, syncTime / syncDelay);
 		GetComponent<Rigidbody>().rotation =  Quaternion.Lerp(syncStartRotation, syncEndRotation, syncTime / syncDelay);
 		//lerpedOVRRotation = Quaternion.Lerp(syncStartOVRRotation, syncEndOVRRotation, syncTime / syncDelay);
-		
+		//finScore = score;
 		// TODO: Set cam to endSyncOVRRot
 		//endSyncOVRRotation = syncOVRRotation;
 		//Debug.Log("OVR: " + endSyncOVRRotation);
