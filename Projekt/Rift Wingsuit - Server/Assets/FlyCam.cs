@@ -220,6 +220,11 @@ public class FlyCam : MonoBehaviour
             playerRidgid.rotation= startingRot;
             playerRidgid.position= startingPos;
         }
+        else if(other.CompareTag("FinisherRing"))
+        {
+            //Fade out in around 5 seconds and restarts the level
+            Fader.StartFade(Color.white);
+        }
             
 
 		// gamelogics
