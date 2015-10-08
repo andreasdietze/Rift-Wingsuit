@@ -32,10 +32,8 @@ Shader "Rift-Suit/Water/Quelle" {
 		#pragma surface surf BlinnPhong alpha
 		#pragma target 3.0
 
-		sampler2D _GrabTexture : register(s0);
-		sampler2D _BumpMap : register(s2);
-
-		sampler2D _CameraDepthTexture; // : register(s4);
+		sampler2D _BumpMap;
+		float4 _GrabTexture_TexelSize;
 
 		float _SunPositionX;
 		float _SunPositionZ;
@@ -45,32 +43,22 @@ Shader "Rift-Suit/Water/Quelle" {
 		float _Shininess;
 		float _WaterReflex;
 		float _WaterLumi;
-		float _R0 = 0.55;
+		float _Rnd = 0.50;
 		float _Opaque;
 
-		float4 _GrabTexture_TexelSize;
-		float4 _CameraDepthTexture_TexelSize;
-
 		struct Input {
-			float2 uv_MainTex;
 			float2 uv_BumpMap;
-			float3 worldRefl; 
 			float4 screenPos;
 			float3 viewDir;
-			INTERNAL_DATA
 		};
 
 		void surf (Input IN, inout SurfaceOutput o) 
-		{
-			// shore blending
-			float z1 = tex2Dproj(_CameraDepthTexture,  IN.screenPos); 
-			z1 =  LinearEyeDepth(z1);	
-			float z2 = (IN.screenPos.z);
-			
+		{			
 			//Specular
 			o.Gloss = _SpecColor.a;
 			o.Specular = (1.0 - _Shininess);
 			
+			//Calc the normal based on the water speed + bump map
 			float waterSpeed = _WaterSpeed * 175;
 			o.Normal = UnpackNormal(tex2D(_BumpMap, IN.uv_BumpMap - waterSpeed * _Time.y * _GrabTexture_TexelSize.xy ));
 			o.Normal += UnpackNormal(tex2D(_BumpMap, IN.uv_BumpMap - (waterSpeed*3) * _Time.y * _GrabTexture_TexelSize.xy));
@@ -82,26 +70,21 @@ Shader "Rift-Suit/Water/Quelle" {
 			//Sonnenposition
 			IN.screenPos.xy = (_SunPositionX, _SunPositionZ);	
 			
-			half4 reflcol = (0.75,0.75,1,1) * _ReflectColor;
+			half4 reflectionCol = (0.75,0.75,1,1) * _ReflectColor;
 			
-			//float3 refrColor = tex2Dproj(_GrabTexture, IN.screenPos);
-			float3 refrColor = _DepthColor;
-			//refrColor = refrColor * ( 1.0 -  depthAlpha ) + _DepthColor * depthAlpha;
+			float4 depthCol = _DepthColor;
 			
-			
-			//Freshel realisation
+			//Fresnel realisation
 			half fresnel = saturate( 1.0 - dot(o.Normal, normalize(IN.viewDir)) );
 			fresnel = pow(fresnel, _WaterReflex);
-			fresnel =  _R0 + (1.0 - _R0) * fresnel;
+			fresnel =  _Rnd + (1.0 - _Rnd) * fresnel;
 			
-			half4 resCol = reflcol * fresnel + half4( refrColor.xyz ,1.0) * ( 1.0 - fresnel);	
-			//half4 resCol = reflcol;	
-			o.Emission = resCol * 0.8;
+			//Calculate emision color based on the init-color + fresnel
+			half4 emissionCol = reflectionCol * fresnel + half4(depthCol.xyz, 1.0) * (1.0 - fresnel);	
+			o.Emission = emissionCol.xyz * 0.8;
 			
-			o.Albedo = resCol * _WaterLumi;
-			
-
-
+			//Reflection 
+			o.Albedo = emissionCol * _WaterLumi;
 		}
 		ENDCG
 	}

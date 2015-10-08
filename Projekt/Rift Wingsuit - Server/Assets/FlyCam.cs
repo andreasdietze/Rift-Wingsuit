@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System.Linq;
 
 public class FlyCam : MonoBehaviour
 {
@@ -211,6 +212,16 @@ public class FlyCam : MonoBehaviour
 		return  Vector3.forward * att;
 	}
 
+    private GameObject GetParent(Transform trans)
+    {
+        GameObject result = null;
+        if (trans != null)
+        {
+            result = trans.parent.gameObject;
+        }
+        return result;
+    }
+
     // Reload level if player collides with terrain
     void OnTriggerEnter(Collider other)
     {
@@ -220,10 +231,16 @@ public class FlyCam : MonoBehaviour
             playerRidgid.rotation= startingRot;
             playerRidgid.position= startingPos;
         }
-        else if(other.CompareTag("FinisherRing"))
+        else if(other.name.Equals("StartWP"))
         {
-            //Fade out in around 5 seconds and restarts the level
-            Fader.StartFade(Color.white);
+            //"StartWP" is the name of every ring, which means a parent object is
+            //existent. Check for the Finisher tag, if existent, start fading.
+            GameObject actualWaypointRing = GetParent(other.transform);
+            if (actualWaypointRing.CompareTag("FinisherRing"))
+            {
+                //Fade out in around 5 seconds and restarts the level
+                Fader.StartFade(Color.white);
+            }
         }
             
 

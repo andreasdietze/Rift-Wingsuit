@@ -36,6 +36,9 @@ public class Fader : MonoBehaviour
     //"Delta" to be applied for the currentFadingColor each second
     private Color deltaFadingColor = new Color(0, 0, 0, 0);
 
+    //In order to avoid problems with OnGUI() as it may be called several times at once
+    private bool usedFrame = false;
+
     //Duration of the fade out (in seconds)
     public float fadeOutDuration = 5.0f;
 
@@ -86,12 +89,25 @@ public class Fader : MonoBehaviour
         instance.init();
     }
 
+    void Update() 
+    {
+        usedFrame = false;
+    }
+
+    //Dirty, dirtier, this piece of code.
+    public bool HasNextFrame() 
+    {
+        return !usedFrame;
+    }
+
     //Is regulary called for rendering/handling GUIEvents
     void OnGUI()
     {
-        //Keep fading in case the target color is not yet matched
-        if (instance.currentFadingColor != instance.targetFadingColor)
+        //Keep fading in case the target color is not yet matched; also, check if another frame has elapsed
+        //in order to avoid unncessary redrawings/calculations
+        if (instance.currentFadingColor != instance.targetFadingColor && instance.HasNextFrame())
         {
+            instance.usedFrame = true;
             //We're finished in case the distance between the Alphas is smaller than the passed time * alpha_PerTick
             if (Mathf.Abs(instance.currentFadingColor.a - instance.targetFadingColor.a) < Mathf.Abs(instance.deltaFadingColor.a) * Time.deltaTime)
             {
