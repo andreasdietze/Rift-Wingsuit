@@ -4,7 +4,7 @@ using System.Linq;
 
 public class FlyCam : MonoBehaviour
 {
-	private StartLevelRayCaster slrc;
+
 
     // smoothing
     public bool smooth = true;
@@ -12,12 +12,14 @@ public class FlyCam : MonoBehaviour
     protected float actSpeed = 0.0f;	// keep it from 0 to 1
     public float speed = 50.0f;			// max speed of camera
     public bool inverted = false;
-
-    protected Vector3 lastDir = new Vector3();
-    protected Vector3 lastViewport = new Vector3();
-
 	private Vector3 lastMouse = new Vector3(255, 255, 255);
 	public float sensitivity = 0.25f;	// keep it from 0..1
+
+	// Direction
+    protected Vector3 lastDir = new Vector3();
+    protected Vector3 lastViewport = new Vector3();
+	Quaternion startingRot;
+	Vector3 startingPos;
 
 	// Global controller settings
 	public bool useKinect = false;
@@ -26,29 +28,33 @@ public class FlyCam : MonoBehaviour
 	private Controller controller;
 	public Rigidbody playerRidgid;
 
-	public bool startFly = false;
-
 	// Fly physics
 	Vector3 fallVelocity = new Vector3();
-
-	NetworkManager nManager;
+	public bool startFly = false;
 	Vector3 addToZ = Vector3.zero;
 
-	GUIStyle font;
+	// Script access
+	NetworkManager nManager;
+	StartLevelRayCaster slrc;
 
-    Quaternion startingRot;
-    Vector3 startingPos;
+	// Debug font
+	GUIStyle font;
 
     void Start()
     {
+		// Set preferred controller
 		if (useKinect) controller = (Controller)GameObject.Find ("RiftCam").GetComponent ("KinectController"); //gameObject.AddComponent<KinectController> ();
 		else if (useMouseKB) controller = (Controller)GameObject.Find ("RiftCam").GetComponent ("KeyboardAndMouseController");
 		else if (usePad) controller = (Controller)GameObject.Find ("RiftCam").GetComponent ("XBoxController");	
 
+		// Get NetworkManager-Script
 		nManager = (NetworkManager)GameObject.FindGameObjectWithTag("Network").GetComponent("NetworkManager");
 
+		// Debug font
 		font = new GUIStyle ();
 		font.fontSize = 28;
+
+		// Tmp start transformation for reset
         startingPos = playerRidgid.position;
         startingRot = playerRidgid.rotation;
     }
@@ -61,6 +67,8 @@ public class FlyCam : MonoBehaviour
 		// Compute direction by active controller
 		lastViewport = controller.CalculateViewport (inverted);
 		dir = controller.GetDir ();
+
+		// -------------------------------- Verschiedene Ansätze der Flugphysik --------------------------------
 
 		// Compute free fall velocity
 		// 1 m/s = 3,6 km/h   -> fall speed m/s * 3.6f
@@ -80,55 +88,32 @@ public class FlyCam : MonoBehaviour
 
 		//Debug.Log (v);
 		fallVelocity = playerRidgid.velocity;
+		
 		//fallVelocity.y -= 9.81f * Time.deltaTime; // h * Time.deltaTime;
 		//Debug.Log (fallVelocity);
 		// Set maximal fall speed in x-position
 		// TODO: - get playerorientation x-axis (test first with cam)
 		// 		 - set the max fall speed in dependence of the angle between x0 and x90
-		Transform camTransform = GameObject.Find ("RiftCam").transform;
-		float playerXR = GameObject.Find ("RiftCam").transform.rotation.eulerAngles.x;
-		//Debug.Log ("Player rotation x: " + playerXR);
-
+		
 		// http://wingsuit.de/wingsuit-lernen/fur-fallschirmspringer/aerodynamische-grundlagen/
 		// The easy way:
 		// - Speed ca 130-250 kmh bei fallrate von 40-50 kmh
 		// Math way:
 		// Formel: av = gvy * sin(playerRotX) - dämpfung * V²
 
-
-		// Dämpfung
-		float attenuation = 0.0f;
-
-		// Lock player rotation on x axis between 0 - 90
-		float rotXLock = 0.0f;
-
-		// Lock forward vector (climbing is not calculated in this case)
-		if (playerXR <= 1.0f) {
-			rotXLock = 1.0f;
-			//camTransform.rotation.eulerAngles = new Vector3(0.0f, 1.0f, 0.0f);
-		}
-
-		// Lock down vector
-		if (playerXR >= 90.0f) {
-			rotXLock = 90.0f;
-			//camTransform.rotation.eulerAngles = new Vector3(camTransform.rotation.eulerAngles.x, 90.0f, camTransform.rotation.eulerAngles.z);
-		}
-
-		if (playerXR <= 0.0f)
-			attenuation = 1.0f;
-
-
-		
 		// Set max fall speed
 		// TODO: - intervall could be from 1 * 198 in X pos to 2.5 * 198 in arrowPos (angle about 90?)
 		// 		 - otherwise player fly against up vector (left part of unit cirlce)
 		// 		 - so we need to set map x0-x90 to x0 = 1.0 to x90 = 2.5
 		// 		 - alternative get cos via dotprodukt between players forward and down vector
 
-		float ms = fallVelocity.y;  // meter per second
-
 		// Dampfungsfaktor abhängig von der Fläche A 
 		// -> A abhängig von Winkel des Spielers zwischen forward und down.
+		// -------------------------------- Verschiedene Ansätze der Flugphysik --------------------------------
+
+
+		// Fallgeschwindigkeit während des Flugs
+		float ms = fallVelocity.y;  // meter per second
 		if (Mathf.Abs(MStoKMH (ms)) > 50.0f) { // && x-position -> playerorientationX
 			fallVelocity.y = -50.0f  / 3.6f;
 			ms = -50.0f / 3.6f;
@@ -162,6 +147,7 @@ public class FlyCam : MonoBehaviour
                 actSpeed = 0.0f;
         }
 
+		// Use orientation accleration
 		if(startFly)
 			addToZ = UpdateSpeedSimple ();
 		
@@ -170,8 +156,7 @@ public class FlyCam : MonoBehaviour
 			transform.Translate((lastDir + addToZ) * speed * actSpeed * Time.deltaTime);
         else
             transform.Translate(dir * speed * Time.deltaTime); 
-
-
+		
     }
 	
 	// 1 m/s = 3,6 km/h   -> fall speed m/s * 3.6f
@@ -179,6 +164,7 @@ public class FlyCam : MonoBehaviour
 			return ms * 3.6f;
 	}
 
+	// Nach Formel
 	Vector3 UpdateSpeed(){
 		// Winkel zwischen z- und y-Achse: ---------
 		// 0° x -> vec3.back			   | \
@@ -187,8 +173,7 @@ public class FlyCam : MonoBehaviour
 		float alpha = transform.rotation.eulerAngles.x;
 		if(alpha >= 90.0f)
 			alpha = 90.0f; // -alpha; 
-
-
+		
 		// Geschindigkeit toAdd (z):
 		// toAdd = gravityVec * sin(alpha) - (attenuation) * V²
 		// Dämpfung abhängig von x rotation, 90° -> A = 1.0, 0° -> A = 0.0
@@ -201,8 +186,8 @@ public class FlyCam : MonoBehaviour
 		return toAdd - (Vector3.forward * ((1.0f * att) / 2)); 
 	}
 
+	// Einfache, derzeit verwendete Flugphysik
 	Vector3 UpdateSpeedSimple(){
-		// Winkel zwischen z- und y-Achse:
 		float alpha = transform.rotation.eulerAngles.x;
 		if(alpha >= 90.0f)
 			alpha = 0.0f;
@@ -225,7 +210,6 @@ public class FlyCam : MonoBehaviour
     // Reload level if player collides with terrain
     void OnTriggerEnter(Collider other)
     {
-
 		if (other.CompareTag ("Boden")) {
 			Application.LoadLevel(0);
             playerRidgid.rotation= startingRot;
@@ -242,12 +226,6 @@ public class FlyCam : MonoBehaviour
                 Fader.StartFade(Color.white);
             }
         }
-            
-
-		// gamelogics
-		// TODO: -> set player to spezified possition after colliding with the terrain
-		// 		 -> set player orientation
-		// 		 -> handle server/client-sync and connections
     }
 
     void OnGUI()

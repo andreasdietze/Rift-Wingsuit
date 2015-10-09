@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
+// http://www.paladinstudios.com/2013/07/10/how-to-create-an-online-multiplayer-game-with-unity/
 public class NetworkManager : MonoBehaviour
 {
 	// Lobby settings
@@ -21,8 +22,6 @@ public class NetworkManager : MonoBehaviour
 	// User for seperate master server
 	// Note: need to set your own ip (local or net)
 	public bool useOwnMasterServer = true;
-
-	// 
 	
 	// Provide server network gui (todo: extend game settings)
 	void OnGUI()

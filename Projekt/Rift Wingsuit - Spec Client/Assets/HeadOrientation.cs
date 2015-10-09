@@ -2,10 +2,18 @@
 using System.Collections;
 
 public class HeadOrientation : MonoBehaviour {
+
+	// Script access
 	private NetworkManager nManager;
 	private Player player;
+
+	// Head orientation by oculus
 	private Quaternion headOrientation;
 
+	// Debug
+	bool showText = true;
+	Rect textArea = new Rect(300,30,Screen.width, Screen.height);
+	
 	void Start () {
 		// Find networkManager
 		nManager = (NetworkManager)GameObject.FindGameObjectWithTag("Network").GetComponent("NetworkManager");
@@ -28,9 +36,7 @@ public class HeadOrientation : MonoBehaviour {
 		transform.rotation = headOrientation * Quaternion.Euler(new Vector3(0.0f, 0.0f, -90.0f));
 	}
 
-	bool showText = true;
-	Rect textArea = new Rect(300,30,Screen.width, Screen.height);
-	
+
 	private void OnGUI()
 	{
 		if(nManager.serverJoined && showText)

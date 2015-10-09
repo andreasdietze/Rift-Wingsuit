@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-// Syncronize playerpos with campos
+// Syncronize playertransformation with camtransformation
 public class PlayerCamSync : MonoBehaviour {
 
 	// Find by tag
@@ -24,11 +24,9 @@ public class PlayerCamSync : MonoBehaviour {
 
 		// Sync player position and player orientation with camera
 		GetComponent<Rigidbody> ().transform.position = (cam.transform.position + new Vector3 (0.0f, 0.0f, 0.0f)) +
-			(Quaternion.Euler(rot) * (Vector3.back * playerSize));// +
-		//(cam.transform.rotation * (Vector3.down * playerSize)) + 
-		//(cam.transform.rotation * (Vector3.up * playerSize));
+			(Quaternion.Euler(rot) * (Vector3.back * playerSize));
 
-		GetComponent<Rigidbody> ().transform.rotation =  Quaternion.Euler(rot) *  //     cam.transform.rotation *
+		GetComponent<Rigidbody> ().transform.rotation =  Quaternion.Euler(rot) *
 			Quaternion.AngleAxis (90.0f, new Vector3 (1.0f, 0.0f, 0.0f));
 
 	}

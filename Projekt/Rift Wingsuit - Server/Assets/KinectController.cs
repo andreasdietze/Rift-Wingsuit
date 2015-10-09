@@ -3,49 +3,61 @@ using System.Collections;
 
 public class KinectController : Controller
 {
-    // Kincect control
+    // Access to kincect input transformation script
     public HSDOutputText kinectOutput;
-	public StartLevelRayCaster slrc;
+	private float kinectSensitivity = 2.75f;
+
+	// Kinect output
     private float kinectYaw;
+	public bool enableYaw = true;
+
     private float kinectPitch;
-	public bool inverted = false;
+	public bool enablePitch = true;
 
-    public bool enableYaw = true;
-    public bool enablePitch = true;
+	// Script access 
+	public StartLevelRayCaster slrc;
+	private NetworkManager nManager;
+	private FlyCam flyCam;
 
+	// Debug-controlls
 	private Vector3 mouse = new Vector3 ();
 	public bool useMouse = true;
 	public bool useKB = true;
+	public bool inverted = false;
 
 	// Const flyspeed
-	public bool hasAutoVelocity = false;
+	public bool hasAutoVelocity = false;	
 	public float flySpeed = 0.0f;			// between 0 and 1;
 
+	// Network and gameStatus flag
 	private bool serverInitiated = false;
 	private bool gameStart = false;
 
-	private NetworkManager nManager;
-	private FlyCam flyCam;
-		
 	//Physic Global Variables
 	public Rigidbody rb;
 
+	// Debug font
 	private GUIStyle font;
 
-	float kinectSensitivity = 2.75f;
-	
 	void Start(){
+		// Get NetworkManager-Script
 		nManager = (NetworkManager)GameObject.FindGameObjectWithTag("Network").GetComponent("NetworkManager");
+
+		// Get FlyCam-Script
 		flyCam = (FlyCam)GameObject.FindGameObjectWithTag ("MainCamera").GetComponent ("FlyCam");
 
+		// Debug font
 		font = new GUIStyle ();
 		font.fontSize = 28;
 	}
 
+	// Debug kb controls and auto velocity
     public override Vector3 GetDir()
     {
-        Vector3 dir = new Vector3();			// create (0,0,0)
+		// Speed
+    	Vector3 dir = new Vector3();			
 
+		// Debug kb controls
 		if (useKB) {
 			if (Input.GetKey (KeyCode.W))
 				dir.z += 1.0f;
@@ -64,6 +76,7 @@ public class KinectController : Controller
 		gameStart = slrc.startGame;
 		//Debug.Log (gameStart);
 
+		// If all flags are true, add to z
 		if (hasAutoVelocity) {				// by unity gui (debug)
 			if(serverInitiated){  			// by network	(works)
 				if(gameStart){				// by raycast	(works)
@@ -74,15 +87,15 @@ public class KinectController : Controller
 				}
 			}
 		}
-		
-        dir.Normalize();
 
-        return dir;
+		dir.Normalize ();
+		return dir;
     }
 
+	// Get kinect user input and use it as rotation
 	public override Vector3 CalculateViewport(bool inverted)
     {
-        // Kinect control
+        // Kinect user input
         if (enableYaw)
 			kinectYaw = kinectOutput.ReturnDeltaY () * kinectSensitivity;
         else
@@ -93,14 +106,15 @@ public class KinectController : Controller
             kinectPitch = 0.0f;
 		//print ("KinectOutput: " + kinectOutput.ToString ());
 
-        // Mouse Look
+        // Mouse Look (Debug)
 		if (useMouse) {
 			mouse = Input.mousePosition;
 			lastViewport = mouse - lastViewport;
 			if (!inverted)
 				lastViewport.y = -lastViewport.y;
 		}
-		
+
+		// Actual angel + mouse + kinect
         lastViewport *= sensitivity;
         lastViewport = new Vector3(transform.eulerAngles.x + lastViewport.y + kinectPitch,
 		                           transform.eulerAngles.y + lastViewport.x + kinectYaw, 0);// * sensitivity;

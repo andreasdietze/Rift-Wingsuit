@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
+// Players class job is to provide data for network transmission
 public class Player : MonoBehaviour
 {
 	public float speed = 10f;
@@ -20,23 +21,24 @@ public class Player : MonoBehaviour
 	// Get ovr cam rig
 	//private Component oculus;
 	private Transform oculusTransform;
-	//private OVRCameraRig oculus;
 
 	// Player status
-	private int score = 0; // nothing to lerp :) 
+	private int score = 0;
 	public bool collideWithWP = false;
 
-
+	// Only send date
 	void OnSerializeNetworkView(BitStream stream, NetworkMessageInfo info){
-		//oculus = (Component)GameObject.FindGameObjectWithTag ("MainCamera").GetComponent("OVRCameraRig");
-		//oculusTransform = GameObject.FindGameObjectWithTag("MainCamera").GetComponent ("Tracker").GetComponent ("RiftCenter").transform;
-		//oculus = (OVRCameraRig)GameObject.FindGameObjectWithTag ("MainCamera").GetComponent("OVRCameraRig");
+
+		// Oclus rift transformation 
 		oculusTransform = GameObject.FindGameObjectWithTag ("RiftCenter").transform;
-		//Debug.Log("Rift: " + oculus);
+
+		// Sync transformation
 		Vector3 syncPosition = Vector3.zero;
 		Vector3 syncVelocity = Vector3.zero;
 		Quaternion syncRotation = Quaternion.identity;
 		Quaternion syncOVRRotation = Quaternion.identity;
+
+		// Playerscore
 		int syncScore = 0;
 
 		if (stream.isWriting){ // Send data
@@ -53,7 +55,7 @@ public class Player : MonoBehaviour
 			stream.Serialize(ref syncRotation);
 
 			// Send OVR cam (seperate oculus head rotation)
-			syncOVRRotation = oculusTransform.transform.rotation;// oculusTransform.rotation; //oculus.transform.rotation;
+			syncOVRRotation = oculusTransform.transform.rotation;
 			stream.Serialize(ref syncOVRRotation);
 
 			// Send score
@@ -63,7 +65,7 @@ public class Player : MonoBehaviour
 
 		}
 		else {// Receive data
-			stream.Serialize(ref syncPosition);
+			/*stream.Serialize(ref syncPosition);
 			stream.Serialize(ref syncVelocity);
 			stream.Serialize(ref syncRotation);
 			
@@ -75,7 +77,7 @@ public class Player : MonoBehaviour
 			syncStartPosition = GetComponent<Rigidbody>().position;
 			
 			syncEndRotation = syncRotation;
-			syncStartRotation = GetComponent<Rigidbody>().rotation;
+			syncStartRotation = GetComponent<Rigidbody>().rotation;*/
 		}
 	}
 	
@@ -88,7 +90,7 @@ public class Player : MonoBehaviour
 			;//InputColorChange();
 		}
 		else{
-			SyncedMovement();
+			//SyncedMovement();
 
 		}
 		UpdatePlayerStatus ();

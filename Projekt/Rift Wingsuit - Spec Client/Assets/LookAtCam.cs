@@ -62,8 +62,13 @@ public class LookAtCam : MonoBehaviour {
 	
 	private Player player;
 	private Quaternion ovrRot;
-	
+
+	// Activate or deactivate oculus rotation processing by network
 	public bool enableOVROrientation = false;
+
+	// GUI
+	bool showText = true;
+	Rect textArea = new Rect(300,0,Screen.width, Screen.height);
 	
 	// Use this for initialization
 	void Start () {
@@ -104,7 +109,7 @@ public class LookAtCam : MonoBehaviour {
 		
 		Vector3 from 	= Vector3.zero;
 		Vector3 to 		= Vector3.zero;
-		// If a player has been generated we now can setup any of the provided camera styles.
+		// If a player has been generated we now can set up any of the provided camera styles.
 		if(target){
 			switch(actionCam){
 			case ActionCam.followLeft: 
@@ -131,8 +136,8 @@ public class LookAtCam : MonoBehaviour {
 			case ActionCam.followBehind: 
 				cam.transform.position = target.transform.position +
 					(target.transform.rotation * (Vector3.up * 1.5f)) +
-					(target.transform.rotation * (Vector3.up * distanceToPlayer)) +
-					(target.transform.rotation * (Vector3.back * distanceToPlayer));
+					(target.transform.rotation * (Vector3.up * -distanceToPlayer)) +
+					(target.transform.rotation * (Vector3.forward * -distanceToPlayer));
 				from = target.transform.position + (target.transform.rotation * (Vector3.up * 1.5f));
 				to 	 = cam.transform.position;
 				cam.transform.rotation = Quaternion.LookRotation(from - to); 
@@ -275,32 +280,15 @@ public class LookAtCam : MonoBehaviour {
 	}
 	
 	private void UpdateDistanceToPlayer(){
-
 		if(Input.GetKey(KeyCode.UpArrow))
 		   distanceToPlayer += 0.1f;
 
-	   if(Input.GetKey(KeyCode.DownArrow))
+	    if(Input.GetKey(KeyCode.DownArrow))
 		   distanceToPlayer -= 0.1f;
-
 	}
 
-	
-	 bool showText = true;
-     Rect textArea = new Rect(300,0,Screen.width, Screen.height);
-     
-     private void OnGUI()
-     {
-         if(nManager.serverJoined && showText)
+    private void OnGUI() {
+		if(nManager.serverJoined && showText)
 			GUI.Label(textArea, ovrRot.ToString());
-     }
-
-
-	
-	// Set random actionCam by timer
-	// TODO
-	
-	// Set actionCam by event
-	// TODO 
-
-	// TODO: Lerp distanceToPlayer 
+    }
 }

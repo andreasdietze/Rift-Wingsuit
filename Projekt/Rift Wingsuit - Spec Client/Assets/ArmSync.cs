@@ -2,9 +2,11 @@
 using System.Collections;
 
 public class ArmSync : MonoBehaviour {
-
+	// Script access
 	private NetworkManager nManager;
 	private Player player;
+
+	// Arm transformation
 	private float rot = 0.0f;
 	private Transform leftShoulder;
 	private Transform rightShoulder;

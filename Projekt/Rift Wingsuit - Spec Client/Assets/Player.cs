@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+// Players class job is to receive data from network
 public class Player : MonoBehaviour
 {
 	public float speed = 10f;
@@ -26,6 +27,7 @@ public class Player : MonoBehaviour
 	public int score = 0;
 	public int finScore =0 ;
 	
+	// Only receive and process data
 	void OnSerializeNetworkView(BitStream stream, NetworkMessageInfo info){
 		Vector3 syncPosition = Vector3.zero;
 		Vector3 syncVelocity = Vector3.zero;
@@ -34,14 +36,14 @@ public class Player : MonoBehaviour
 		int syncScore = 0;
 	
 		if (stream.isWriting){ // Send data
-			syncPosition = GetComponent<Rigidbody>().position;
+			/*syncPosition = GetComponent<Rigidbody>().position;
 			stream.Serialize(ref syncPosition);
 
 			syncVelocity = GetComponent<Rigidbody>().velocity;
 			stream.Serialize(ref syncVelocity);
 			
 			syncRotation = GetComponent<Rigidbody>().rotation;
-			stream.Serialize(ref syncRotation);
+			stream.Serialize(ref syncRotation);*/
 		}
 		else {// Receive data
 			stream.Serialize(ref syncPosition);
@@ -61,13 +63,12 @@ public class Player : MonoBehaviour
 			syncEndRotation = syncRotation;
 			syncStartRotation = GetComponent<Rigidbody>().rotation;
 			
-			// at the moment player rotates by rift -> this rot is for head only
+			// at the moment player rotates by rift -> this rot is for head only -> works
 			syncEndOVRRotation = syncOVRRotation; 
 			syncStartOVRRotation = GetComponent<Rigidbody>().rotation;
 			
 			score = syncScore;
 			//Debug.Log(syncScore);
-			
 		}
 	}
 	
@@ -84,15 +85,11 @@ public class Player : MonoBehaviour
 		}
 	}
 	
+	// Sync the movement due to 4 fps network
 	private void SyncedMovement(){
 		syncTime += Time.deltaTime;
 		GetComponent<Rigidbody>().position = Vector3.Lerp(syncStartPosition, syncEndPosition, syncTime / syncDelay);
 		GetComponent<Rigidbody>().rotation =  Quaternion.Lerp(syncStartRotation, syncEndRotation, syncTime / syncDelay);
-		//lerpedOVRRotation = Quaternion.Lerp(syncStartOVRRotation, syncEndOVRRotation, syncTime / syncDelay);
-		//finScore = score;
-		// TODO: Set cam to endSyncOVRRot
-		//endSyncOVRRotation = syncOVRRotation;
-		//Debug.Log("OVR: " + endSyncOVRRotation);
 	}
 	
 	
