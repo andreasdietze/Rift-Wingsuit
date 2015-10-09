@@ -18,6 +18,10 @@ public class LookAtCam : MonoBehaviour {
 	// The value we increase the rotation every frame
 	public float rotationSpeed 			= 0.0f;
 
+	// Rotation by user for free cam 
+	private float rotateX				= 0.0f;
+	private float rotateY				= 0.0f;
+
 	// Index for cam style via keyboard
 	int index = 0;
 
@@ -39,10 +43,11 @@ public class LookAtCam : MonoBehaviour {
 	// - followRight: 	look from the right to the player
 	// - followBehind: 	look from behind to the player
 	// - followHead: 	look through the eyes of the player
-	// - circleAround: 	look at the player and circle around him
-	// - circle: ...
+	// - circleAroundY: look at the player and circle around him (Y)
+	// - circleAroundX: look at the player and circle around him (X)
+	// - freeCam:		look at the player with free orbit control
 	private enum ActionCam{followLeft, followRight, followAbove, followBehind, followFront, followHead,
-		circleAroundY, circleAroundX};
+		circleAroundY, circleAroundX, freeCam};
 
 	// Enum object of ActionCam
 	private ActionCam actionCam = ActionCam.followLeft;
@@ -56,11 +61,15 @@ public class LookAtCam : MonoBehaviour {
 	public bool followHead 		= false;
 	public bool circleAroundY	= false;
 	public bool circleAroundX 	= false;
+	public bool freeCam 		= false;
 
 	// Instance to network managing. Verifies that client has joind a server.
 	private NetworkManager nManager;
-	
+
+	// Access to player script
 	private Player player;
+
+	// Oculus rotation
 	private Quaternion ovrRot;
 
 	// Activate or deactivate oculus rotation processing by network
@@ -106,7 +115,9 @@ public class LookAtCam : MonoBehaviour {
 				Debug.Log(e.Message);
 			}
 		}
-		
+
+		float foo1 = 0.0f, foo2 = 0.0f;
+
 		Vector3 from 	= Vector3.zero;
 		Vector3 to 		= Vector3.zero;
 		// If a player has been generated we now can set up any of the provided camera styles.
@@ -187,7 +198,7 @@ public class LookAtCam : MonoBehaviour {
 					new Vector3(Mathf.Sin(rotationVelocity / 180 * Mathf.PI) * lerpedDistance,
 					            0.0f,
 					            Mathf.Cos(rotationVelocity / 180 * Mathf.PI) * lerpedDistance);
-				//cam.transform.rotation = Quaternion.LookRotation(target.transform.position - cam.transform.position); 
+
 				from = target.transform.position + (target.transform.rotation * (Vector3.up * 1.5f));
 				to 	 = cam.transform.position;
 				cam.transform.rotation = Quaternion.LookRotation(from - to); 
@@ -219,18 +230,45 @@ public class LookAtCam : MonoBehaviour {
 				// Get target position and circle around it on x
 				cam.transform.position = target.transform.position + (target.transform.rotation * (Vector3.up * 1.5f)) +
 					new Vector3(0.0f,
-					            Mathf.Sin(rotationVelocity / 180 * Mathf.PI) * distanceToPlayer,
-					            Mathf.Cos(rotationVelocity / 180 * Mathf.PI) * distanceToPlayer);
-				//cam.transform.rotation = Quaternion.LookRotation(target.transform.position - cam.transform.position); 
+					            Mathf.Sin(rotationVelocity / 180 * Mathf.PI) * lerpedDistance,
+					            Mathf.Cos(rotationVelocity / 180 * Mathf.PI) * lerpedDistance);
+
 				from = target.transform.position + (target.transform.rotation * (Vector3.up * 1.5f));
 				to 	 = cam.transform.position;
 				cam.transform.rotation = Quaternion.LookRotation(from - to); 
 				break;
+			case ActionCam.freeCam: 
+
+				cam.transform.position = target.transform.position + (target.transform.rotation * (Vector3.up * 1.5f)) +
+					new Vector3(0.0f,
+					            Mathf.Sin(rotateY / 180 * Mathf.PI) * distanceToPlayer,
+					            Mathf.Cos(rotateY / 180 * Mathf.PI) * distanceToPlayer) + 
+					new Vector3(Mathf.Sin(rotateX / 180 * Mathf.PI) * distanceToPlayer,
+					            0.0f,
+					            Mathf.Cos(rotateX / 180 * Mathf.PI) * distanceToPlayer);
+				
+				from = target.transform.position + (target.transform.rotation * (Vector3.up * 1.5f));
+				to 	 = cam.transform.position;
+				cam.transform.rotation = Quaternion.LookRotation(from - to); 
+
+
+				/*cam.transform.position = RotatePointAroundPivot(cam.transform.position,
+					                       						target.transform.position,
+					                       						Quaternion.Euler(0, foo1++ * Time.deltaTime, 0));
+				from = target.transform.position + (target.transform.rotation * (Vector3.up * 1.5f));
+				to 	 = cam.transform.position;
+				cam.transform.rotation = Quaternion.LookRotation(from - to);  */
+
+				Debug.Log ("FreeCam");
+				break;
 			}
 		}
+
+		// Update Controls
 		UpdateActionCamByMenue();
 		UpdateActionCamByKeyboard();
 		UpdateDistanceToPlayer ();
+		UpdateFreeCam ();
 	}
 	
 	// Set actionCam by unity menue. Bit ugly implementation but
@@ -252,6 +290,8 @@ public class LookAtCam : MonoBehaviour {
 			actionCam = ActionCam.circleAroundY;
 		else if(circleAroundX)
 			actionCam = ActionCam.circleAroundX;
+		else if(freeCam)
+			actionCam = ActionCam.freeCam;
 		else // Default actionCam
 			actionCam = ActionCam.followBehind;
 		
@@ -262,7 +302,7 @@ public class LookAtCam : MonoBehaviour {
 		if (Input.GetKeyDown (KeyCode.C))
 			index++;
 
-		if (index == 8)
+		if (index == 9)
 			index = 0;
 
 		//Debug.Log ("Actual actionCam index: " + index);
@@ -276,15 +316,31 @@ public class LookAtCam : MonoBehaviour {
 			case 5: actionCam = ActionCam.followHead; break;
 			case 6: actionCam = ActionCam.circleAroundY; break;
 			case 7: actionCam = ActionCam.circleAroundX; break;
+			case 8: actionCam = ActionCam.freeCam; break;
 		}
 	}
-	
+
+	// Update distance to player (zoom)
 	private void UpdateDistanceToPlayer(){
-		if(Input.GetKey(KeyCode.UpArrow))
+		if(Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.Q))
 		   distanceToPlayer += 0.1f;
 
-	    if(Input.GetKey(KeyCode.DownArrow))
+		if(Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.E))
 		   distanceToPlayer -= 0.1f;
+	}
+
+	// Update rotation for free cam
+	private void UpdateFreeCam(){
+		if (rotateX >= 360) rotateX = 0.0f;
+		if (rotateY >= 360) rotateY = 0.0f;
+		if (Input.GetKey (KeyCode.W)) rotateY += 1.0f;		
+		if (Input.GetKey (KeyCode.S)) rotateY -= 1.0f;
+		if(Input.GetKey(KeyCode.A)) rotateX -= 1.0f;
+		if(Input.GetKey(KeyCode.D)) rotateX += 1.0f;
+	}
+
+	public static Vector3 RotatePointAroundPivot(Vector3 point, Vector3 pivot, Quaternion angle) {
+		return angle * ( point - pivot) + pivot;
 	}
 
     private void OnGUI() {
