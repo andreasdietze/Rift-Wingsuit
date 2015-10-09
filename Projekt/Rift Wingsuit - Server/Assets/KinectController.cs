@@ -31,6 +31,8 @@ public class KinectController : Controller
 	public Rigidbody rb;
 
 	private GUIStyle font;
+
+	float kinectSensitivity = 2.75f;
 	
 	void Start(){
 		nManager = (NetworkManager)GameObject.FindGameObjectWithTag("Network").GetComponent("NetworkManager");
@@ -82,11 +84,11 @@ public class KinectController : Controller
     {
         // Kinect control
         if (enableYaw)
-			kinectYaw = kinectOutput.ReturnDeltaY ();
+			kinectYaw = kinectOutput.ReturnDeltaY () * kinectSensitivity;
         else
             kinectYaw = 0.0f;
         if (enablePitch)
-            kinectPitch = kinectOutput.ReturnDeltaZ();
+			kinectPitch = kinectOutput.ReturnDeltaZ() * kinectSensitivity;
         else
             kinectPitch = 0.0f;
 		//print ("KinectOutput: " + kinectOutput.ToString ());
